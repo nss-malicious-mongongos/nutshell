@@ -20,7 +20,7 @@ export default class TaskForm extends Component {
             name: this.state.taskName,
             completion_date: this.state.taskDate,
             userId: parseInt(sessionStorage.getItem("credentials")),
-            completed: 0
+            completed: false
         };
             
         this.props.addTask(task)

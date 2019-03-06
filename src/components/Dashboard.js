@@ -6,7 +6,7 @@ export default class Dashboard extends Component {
         const history = this.props.history;
         return (
             //put your components here
-            <TaskList tasks={this.props.tasks} history={history} />
+            <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
         )
     }
 }

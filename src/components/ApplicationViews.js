@@ -16,7 +16,7 @@ class ApplicationViews extends Component {
 
 		const userId = parseInt(sessionStorage.getItem("credentials"))
 		
-		TaskManager.searchUsername(userId)
+		TaskManager.getQuery(`?userId=${userId}&completed=false`)
 			.then(tasks => newState.tasks = tasks)
 		
 			.then(() => this.setState(newState))
@@ -24,7 +24,7 @@ class ApplicationViews extends Component {
 	
 	addTask = task => {
 		return TaskManager.addTask(task)
-			.then(() => TaskManager.searchUsername(parseInt(sessionStorage.getItem("credentials"))))
+			.then(() => TaskManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&completed=false`))
 			.then(tasks => 
 				this.setState({
 					tasks: tasks
@@ -33,20 +33,29 @@ class ApplicationViews extends Component {
 	}
 	updateTask = editedTask => {
 		return TaskManager.edit(editedTask)
-			.then(() => TaskManager.searchUsername(parseInt(sessionStorage.getItem("credentials"))))
+			.then(() => TaskManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&completed=false`))
 			.then(tasks => 
 				this.setState({
 					tasks: tasks
 				})
 			)
 	}
+	deleteTask = id => {
+		TaskManager.delete(id)
+			.then(() => TaskManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&completed=false`))
+			.then(tasks => 
+				this.setState({
+					tasks: tasks
+				})
+			)
+    }
 
 	render() {
-		console.log("Props are:", this.props)
-		console.log("State is:", this.state)
+//		console.log("Props are:", this.props)
+//		console.log("State is:", this.state)
 		return <React.Fragment>
 			<Route exact path="/" render={(props) => {
-				return <Dashboard {...props} tasks={this.state.tasks} />
+				return <Dashboard {...props} tasks={this.state.tasks} updateTask={this.updateTask} deleteTask={this.deleteTask} />
 			}} />
 
 			<Route exact path="/tasks/new" render={(props) => {
