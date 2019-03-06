@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TaskManager from "../../modules/TaskManager";
 
-export default class TaskForm extends Component {
+export default class TaskEditForm extends Component {
     // Set initial state
     state = {
         taskName: "",
@@ -18,13 +18,12 @@ export default class TaskForm extends Component {
     updateExistingTask = event => {
         event.preventDefault();
         const editedTask = {
-            id: this.props.match.params.taskId,
+            id: parseInt(this.props.match.params.taskId),
             name: this.state.taskName,
             completion_date: this.state.taskDate,
             userId: parseInt(sessionStorage.getItem("credentials")),
             completed: 0
         };
-            
         this.props.updateTask(editedTask)
             .then(() => this.props.history.push("/"));
     };
@@ -46,10 +45,6 @@ export default class TaskForm extends Component {
                     <div className="form-group">
                         <label htmlFor="taskName">Task name</label>
                         <input type="text" required className="form-control" onChange={this.handleFieldChange} id="taskName" value={this.state.taskName} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="taskDate">Completion Date</label>
-                        <input type="date" required className="form-control" onChange={this.handleFieldChange} id="taskDate" value={this.state.taskDate} />
                     </div>
                     <button type="submit" onClick={this.updateExistingTask} className="btn btn-primary">Submit</button>
                 </form>

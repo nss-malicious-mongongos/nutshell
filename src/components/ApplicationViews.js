@@ -31,6 +31,15 @@ class ApplicationViews extends Component {
 				})
 			)
 	}
+	updateTask = editedTask => {
+		return TaskManager.edit(editedTask)
+			.then(() => TaskManager.searchUsername(parseInt(sessionStorage.getItem("credentials"))))
+			.then(tasks => 
+				this.setState({
+					tasks: tasks
+				})
+			)
+	}
 
 	render() {
 		console.log("Props are:", this.props)
@@ -44,10 +53,10 @@ class ApplicationViews extends Component {
 				return <TaskForm {...props} addTask={this.addTask} />
 			}} />
 			<Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
-				return <TaskEditForm {...props} />
+				return <TaskEditForm {...props} updateTask={this.updateTask} />
 			}} />
 		</React.Fragment>
 	}
 }
 
-export default ApplicationViews
+export default ApplicationViews;

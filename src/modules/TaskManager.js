@@ -25,7 +25,7 @@ export default {
         return fetch(`${Settings.remoteURL}/tasks/${obj.id}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application.json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(obj)
         }).then(data => data.json())
