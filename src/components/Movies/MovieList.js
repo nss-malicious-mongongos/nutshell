@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import MovieCard from './MovieCard';
-import 'react-toastify/dist/ReactToastify.css'
+import MovieCard from './MovieCard'
 
 class MovieList extends Component {
 
@@ -13,23 +12,20 @@ class MovieList extends Component {
         return (
             <React.Fragment>
             <div className="centerChildren">
-                <button type="button"
+                {/* <button type="button"
                         className="btn btn-success"
                         onClick={() => {
                             this.props.history.push("/Movies/new")}
                         }>
                     Add Movie
-                </button>
+                </button> */}
             </div>
             <article className="Movies">
                 {
                     this.props.Movies.map(Movie =>
                         <MovieCard key={`Movie-${Movie.id}`}
                             Movie={Movie}
-                            dischargeMovie={this.props.dischargeMovie}
-                            owners={this.props.owners}
-                            MovieOwners={this.props.MovieOwners}
-                            history={this.props.history}
+                            deleteMovie={this.props.deleteMovie}
                             />
                     )
                 }
