@@ -29,7 +29,17 @@ export default class ArticleList extends Component {
                                     <a href={article.url}>{article.url}</a>
 
                                 </div>
-                                <button className="deleteArticleButton" onClick={() => { this.props.deleteArticle(article.id) }}>Delete Article </button>
+                                <button className="btn btn-danger" onClick={() => { this.props.deleteArticle(article.id) }}>Delete Article </button>
+
+                                <button
+                                    type="button"
+                                    className="editArticleButton"
+                                    onClick={() => {
+                                        this.props.history.push(`/articles/${article.id}/edit`);
+                                    }}
+                                >
+                                    Edit Article
+                            </button>
                             </section>
                         )
 

@@ -3,6 +3,7 @@ import { Route } from "react-router-dom"
 import Dashboard from "./Dashboard";
 import ArticleManager from "../modules/ArticleManager";
 import NewArticleForm from "./news/NewArticleForm";
+import EditArticleForm from "./news/EditArticleForm";
 
 
 class ApplicationViews extends Component {
@@ -69,6 +70,15 @@ class ApplicationViews extends Component {
         />
       }}
       />
+
+<Route path="/articles/:articleId(\d+)/edit" render={props => {
+                        return <EditArticleForm {...props}
+                        editArticle={this.EditArticle}
+                        articles={this.state.articles}
+
+                          />
+                    }}
+                />
 
 
     </React.Fragment>

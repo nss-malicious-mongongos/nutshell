@@ -11,7 +11,7 @@ export default {
         }).then(e => e.json())
       },
       getAll() {
-        return fetch(`${Settings.remoteURL}/articles`).then(e => e.json())
+        return fetch(`${Settings.remoteURL}/articles?_sort=timestamp&_order=desc`).then(e => e.json())
       },
       CreateNewArticle(obj) {
         return fetch(`${Settings.remoteURL}/articles`, {
@@ -23,8 +23,8 @@ export default {
         }).then(data => data.json())
       },
       EditArticle(editedArticle) {
-        return fetch(`http://localhost:5002/articles/${editedArticle.id}`, {
-          method: "PUT",
+        return fetch(`${Settings.remoteURL}/articles/${editedArticle.id}`, {
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json"
           },

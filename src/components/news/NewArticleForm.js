@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from 'moment'
 
 
 export default class NewArticleForm extends Component {
@@ -24,7 +25,8 @@ export default class NewArticleForm extends Component {
             const article = {
                 title: this.state.title,
                 synopsis: this.state.synopsis,
-                userId: parseInt(sessionStorage.getItem("credentials"))
+                userId: parseInt(sessionStorage.getItem("credentials")),
+                timestamp: moment().format('LLL')
             };
 
             this.props.addNewArticle(article)
