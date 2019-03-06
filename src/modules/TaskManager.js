@@ -33,5 +33,8 @@ export default {
     searchUsername(id) {
         return fetch(`${Settings.remoteURL}/tasks?userId=${id}`)
         .then(e => e.json())
+    },
+    getQuery(query) {
+        return fetch(`${Settings.remoteURL}/tasks${query}`).then(e => e.json())
     }
 }

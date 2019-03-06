@@ -1,29 +1,29 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
 
-export default class OwnerList extends Component {
+export default class TaskList extends Component {
     render() {
         return (
-            <React.Fragment>
-                <h1>Owner List</h1>
-                <div className="ownerButton">
-                    <button type="button" className="btn btn-success" onClick={() => {this.props.history.push("/owners/new")}}>Add New Owner</button>
+            <div className="overflow-auto" id="tasks-module">
+                <h2>Task List</h2>
+                <div className="taskButton">
+                    <button type="button" className="btn btn-success" onClick={() => {this.props.history.push("/tasks/new")}}>Add New Task</button>
                 </div>
-                <section className="owners">
                 {
-                    this.props.owners.map(owner => 
-                        <div key={owner.id} className="card">
-                        <h3>{owner.name}</h3>
-                        <button type="button" className="btn btn-success" 
-                                onClick={() => { this.props.history.push(`/owners/${owner.id}/edit`); }}
-                                >Edit</button>
-                        <Link className="nav-link" to={`/owners/${owner.id}`}>Details</Link>
-                        <a href="#" onClick={() => this.props.deleteOwner(owner.id)}>Delete</a>
+                    this.props.tasks.map(task => 
+                        <div key={task.id} className="card">
+                        <p className="card-header">{task.name}</p>
+                        <p>Due on {task.completion_date}</p>
+                        <p><input type="checkbox" id="completed" name="completed" value="1" 
+                            onClick={() => { /*change state */ }}
+                        />
+                        <label htmlFor="completed">completed</label>
+                        </p>
+                        <a href="#" onClick={() => { this.props.history.push(`/tasks/${task.id}/edit`); }}>Edit</a>
+                        <a href="#" onClick={() => this.props.delete(task.id)}>Delete</a>
                         </div>
                     )
                 }
-                </section>
-            </React.Fragment>
+            </div>
         );
     }
 }
