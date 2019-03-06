@@ -17,6 +17,10 @@ class ApplicationViews extends Component {
       })
   }
 
+  addEvent = () => {
+
+  }
+
   deleteEvent = (id) => {
     EventManager.delete(id)
       .then(() => EventManager.getAll())
@@ -33,11 +37,11 @@ class ApplicationViews extends Component {
         return <Dashboard {...props}
         events={this.state.events}
         deleteEvent={this.deleteEvent}
-        addEvent={this.addEvent} />
+        />
       }}
       />
       <Route path="/newEvent" render={props => {
-        return <EventForm />
+        return <EventForm addEvent={this.addEvent} />
       }}/>
     </React.Fragment>
   }
