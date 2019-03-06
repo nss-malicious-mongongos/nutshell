@@ -1,0 +1,7 @@
+.event-card{
+    display: flex;
+width: 50px;
+
+    flex-basis: 22%;
+
+}

@@ -1,7 +1,11 @@
 import React, {Component} from "react"
+<<<<<<< HEAD
 import { Route } from 'react-router-dom'
 import MovieManager from "../modules/MovieManager"
 import MovieList from "./Movies/MovieList"
+=======
+import ArticleList from "./news/NewsList";
+>>>>>>> articles
 
 export default class Dashboard extends Component {
     state = {
@@ -22,6 +26,7 @@ export default class Dashboard extends Component {
 
 
     render() {
+<<<<<<< HEAD
         return  <React.Fragment>
             <Route exact path="/animals" render={(props) => {
                 console.log("this kind of exists")
@@ -30,3 +35,10 @@ export default class Dashboard extends Component {
                             </React.Fragment>
         
                         }}
+=======
+        return (
+            <ArticleList {...this.props} />
+        )
+    }
+}
+>>>>>>> articles
