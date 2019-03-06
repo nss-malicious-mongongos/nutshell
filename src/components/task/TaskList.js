@@ -19,7 +19,7 @@ export default class TaskList extends Component {
                         <label htmlFor="completed">completed</label>
                         </p>
                         <a href="#" onClick={() => { this.props.history.push(`/tasks/${task.id}/edit`); }}>Edit</a>
-                        <a href="#" onClick={() => this.props.delete(task.id)}>Delete</a>
+                        <a href="#" onClick={() => this.props.delete(task.id)} className="btn-red">Delete</a>
                         </div>
                     )
                 }

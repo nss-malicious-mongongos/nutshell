@@ -14,23 +14,36 @@ class ApplicationViews extends Component {
 	componentDidMount() {
 		const newState = {};
 
-		TaskManager.getAll()
+		const userId = parseInt(sessionStorage.getItem("credentials"))
+		
+		TaskManager.searchUsername(userId)
 			.then(tasks => newState.tasks = tasks)
-
+		
 			.then(() => this.setState(newState))
+	}
+	
+	addTask = task => {
+		return TaskManager.addTask(task)
+			.then(() => TaskManager.searchUsername(parseInt(sessionStorage.getItem("credentials"))))
+			.then(tasks => 
+				this.setState({
+					tasks: tasks
+				})
+			)
 	}
 
 	render() {
-		console.log(this.state)
+		console.log("Props are:", this.props)
+		console.log("State is:", this.state)
 		return <React.Fragment>
-			<Route path="/" render={(props) => {
+			<Route exact path="/" render={(props) => {
 				return <Dashboard {...props} tasks={this.state.tasks} />
 			}} />
 
-			<Route path="/tasks/new" render={(props) => {
-				return <TaskForm {...props} />
+			<Route exact path="/tasks/new" render={(props) => {
+				return <TaskForm {...props} addTask={this.addTask} />
 			}} />
-			<Route path="/tasks/:taskId(\d+)/edit" render={(props) => {
+			<Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
 				return <TaskEditForm {...props} />
 			}} />
 		</React.Fragment>
