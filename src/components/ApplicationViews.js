@@ -37,6 +37,12 @@ class ApplicationViews extends Component {
 
   }
 
+  deleteMovie = id => {
+    return MovieManager.deleteMovie(id)
+    .then(() => MovieManager.getAll())
+    .then(movies => this.setState({ movies: movies }))
+  }
+
 
   componentDidMount() {
     const newState = {}
@@ -62,6 +68,7 @@ class ApplicationViews extends Component {
           addNewArticle={this.addNewArticle}
           editArticle={this.EditArticle}
           movies={this.state.movies}
+          deleteMovie={this.deleteMovie}
 
         />
       }}

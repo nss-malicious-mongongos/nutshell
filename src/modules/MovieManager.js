@@ -4,7 +4,7 @@ export default {
     get(id) {
         return fetch(`${Settings.remoteURL}/movies/${id}`).then(e => e.json());
     },
-    delete(id) {
+    deleteMovie(id) {
         return fetch(`${Settings.remoteURL}/movies/${id}`, {
             "method": "DELETE"
         }).then(e => e.json());
