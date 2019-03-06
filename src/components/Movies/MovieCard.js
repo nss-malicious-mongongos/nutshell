@@ -1,28 +1,31 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import clap from "./movie.png"
+import "./movie.css"
 
 class MovieCard extends Component {
 
     componentDidMount() {
-        console.log(`componentDidMount -- Movie ${this.props.movie.id}`)
+        console.log(`componentDidMount -- Movie ${this.props.movies.id}`)
     }
 
     render() {
-        console.log(`render -- Movie ${this.props.movie.id}`)
+        console.log(`render -- Movie ${this.props.movies.id}`)
 
         return (
             <React.Fragment>
-                <div key={this.props.Movie.id} className="card">
+                <div key={this.props.movies.id} className="card">
                     <div className="card-body">
                         <h5 className="card-title">
                             <img src={clap} className="icon--clap" />
-                            <div>{this.props.movie.title}</div>
+                            <div>{this.props.movies.title}</div>
+                            <div>{this.props.movies.lead}</div>
+                            <div>{this.props.movies.year}</div>
                             <button
                                 type="button"
                                 className="btn btn-success"
                                 onClick={() => {
-                                    this.props.history.push(`/Movies/${this.props.Movie.id}/edit`);
+                                    this.props.history.push(`/Movies/${this.props.movies.id}/edit`);
                                 }}
                                 >
                                 Edit
@@ -31,14 +34,14 @@ class MovieCard extends Component {
                             {
                                 (this.props.hasOwnProperty("deleteMovie"))
                                     ? <button
-                                        onClick={() => this.props.deleteMovie(this.props.movie.id)}
-                                        className="card-link">Delete</button>
+                                        type="button"
+                                        onClick={() => this.props.deleteMovie(this.props.movies.id)}
+                                        className="btn btn-danger">Delete</button>
                                     : null
                             }
 
                         </h5>
                     </div>
-                    <Link className="nav-link" to={`/Movies/${this.props.movie.id}`}>Details</Link>
                 </div>
 
             </React.Fragment>

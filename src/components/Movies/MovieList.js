@@ -20,21 +20,16 @@ class MovieList extends Component {
                     Add Movie
                 </button> */}
             </div>
-            <article className="Movies">
+            <article className="movies">
                 {
-                    this.props.Movies.map(Movie =>
-                        <MovieCard key={`Movie-${Movie.id}`}
-                            Movie={Movie}
+                    this.props.movies.map(movies =>
+                        <MovieCard key={`Movie-${movies.id}`}
+                            movies={movies}
                             deleteMovie={this.props.deleteMovie}
                             />
                     )
                 }
             </article>
-            <div className="centerChildren">
-                <button onClick={ () => this.props.loadMovies() }>
-                    Reload Movies
-                </button>
-            </div>
             </React.Fragment>
         )
     }

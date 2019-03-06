@@ -1,19 +1,17 @@
 import React, { Component } from "react"
 import { Route } from "react-router-dom"
-<<<<<<< HEAD
-import Dashboard from "./Dashboard"
-class ApplicationViews extends Component {
-  
-=======
 import Dashboard from "./Dashboard";
 import ArticleManager from "../modules/ArticleManager";
+import MovieManager from "../modules/MovieManager"
 
 
 class ApplicationViews extends Component {
   state = {
-    articles: []
+    articles: [],
+    movies: []
   }
 
+  movies = MovieManager.getAll()
 
   EditArticle = (editedArticleObject) => {
     return ArticleManager.EditArticle(editedArticleObject)
@@ -43,15 +41,18 @@ class ApplicationViews extends Component {
   componentDidMount() {
     const newState = {}
 
+    MovieManager.getAll()
+      .then(movies => newState.movies = movies)
     ArticleManager.getAll()
       .then(articles => newState.articles = articles)
       .then(() => this.setState(newState))
   }
->>>>>>> articles
+
   render() {
 
     console.log(this.props.activeUser)
     return <React.Fragment>
+
 
 
       <Route exact path="/" render={props => {
@@ -60,6 +61,7 @@ class ApplicationViews extends Component {
           deleteArticle={this.deleteArticle}
           addNewArticle={this.addNewArticle}
           editArticle={this.EditArticle}
+          movies={this.state.movies}
 
         />
       }}

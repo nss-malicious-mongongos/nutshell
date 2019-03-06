@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./Movie.css";
+import "./movie.css";
 
 export default class MovieForm extends Component {
   // Set initial state
