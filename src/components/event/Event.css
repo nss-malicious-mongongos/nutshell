@@ -1,3 +1,8 @@
+.events-header,
+.new-event-btn {
+    text-align: center;
+}
+
 .eventsContainer {
     display: flex;
     flex-direction: row;

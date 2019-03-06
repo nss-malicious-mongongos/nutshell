@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Route } from "react-router-dom"
 import Dashboard from "./Dashboard"
 import EventManager from "../modules/EventManager";
+import EventForm from "./event/EventForm";
 class ApplicationViews extends Component {
   state = {
     events: []
@@ -29,9 +30,15 @@ class ApplicationViews extends Component {
   render() {
     return <React.Fragment>
       <Route exact path="/" render={props => {
-        return <Dashboard {...props} events={this.state.events} deleteEvent={this.deleteEvent} />
+        return <Dashboard {...props}
+        events={this.state.events}
+        deleteEvent={this.deleteEvent}
+        addEvent={this.addEvent} />
       }}
       />
+      <Route path="/newEvent" render={props => {
+        return <EventForm />
+      }}/>
     </React.Fragment>
   }
 }
