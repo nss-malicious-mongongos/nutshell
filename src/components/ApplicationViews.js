@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Route } from "react-router-dom"
 import Dashboard from "./Dashboard";
 import ArticleManager from "../modules/ArticleManager";
+import NewArticleForm from "./news/NewArticleForm";
 
 
 class ApplicationViews extends Component {
@@ -27,7 +28,7 @@ class ApplicationViews extends Component {
   }
 
   deleteArticle = id => {
-    return ArticleManager.removeAndlist(id)
+    return ArticleManager.deleteArticle(id)
       .then(() => ArticleManager.getAll())
       .then(articles => this.setState({ articles: articles })
       )
@@ -54,6 +55,16 @@ class ApplicationViews extends Component {
           deleteArticle={this.deleteArticle}
           addNewArticle={this.addNewArticle}
           editArticle={this.EditArticle}
+
+        />
+      }}
+      />
+
+<Route exact path="/articles/new" render={props => {
+        return <NewArticleForm {...props}
+          articles={this.state.articles}
+          addNewArticle={this.addNewArticle}
+
 
         />
       }}

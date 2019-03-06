@@ -1,7 +1,20 @@
-.event-card{
+.article-card{
     display: flex;
-width: 50px;
+    flex-direction: column;
+
+width: 400px;
 
     flex-basis: 22%;
 
 }
+.articleContainer {
+    padding-bottom: 50px;
+
+}
+
+.ArticleHeader{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
