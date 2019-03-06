@@ -3,6 +3,9 @@ import { Route } from "react-router-dom"
 import Dashboard from "./Dashboard";
 import ArticleManager from "../modules/ArticleManager";
 import MovieManager from "../modules/MovieManager"
+import MovieForm from "./Movies/MovieForm"
+import MovieList from "./Movies/MovieList"
+import MovieEditForm from "./Movies/MovieEditForm";
 
 
 class ApplicationViews extends Component {
@@ -39,10 +42,15 @@ class ApplicationViews extends Component {
 
   deleteMovie = id => {
     return MovieManager.deleteMovie(id)
-    .then(() => MovieManager.getAll())
-    .then(movies => this.setState({ movies: movies }))
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
   }
 
+  addMovie = movie => {
+    return MovieManager.addMovie(movie)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
 
   componentDidMount() {
     const newState = {}
@@ -74,6 +82,27 @@ class ApplicationViews extends Component {
       }}
       />
 
+      <Route exact path="/Movies" render={props => {
+        return <MovieList {...props}
+          movies={this.state.movies}
+          deleteMovie={this.deleteMovie}
+        />
+      }}
+      />
+      <Route path="/Movies/:movieId(\d+)/edit" render={props => {
+        return <MovieEditForm {...props}
+          movies={this.state.movies}
+        />
+      }}
+      />
+
+      <Route exact path="/Movies/New" render={props => {
+        return <MovieForm {...props}
+          addMovie={this.addMovie}
+
+        />
+      }}
+      />
 
     </React.Fragment>
   }

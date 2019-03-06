@@ -12,18 +12,19 @@ class MovieList extends Component {
         return (
             <React.Fragment>
             <div className="centerChildren">
-                {/* <button type="button"
+            <button type="button"
                         className="btn btn-success"
                         onClick={() => {
                             this.props.history.push("/Movies/new")}
                         }>
                     Add Movie
-                </button> */}
+                </button>
             </div>
             <article className="movies">
                 {
                     this.props.movies.map(movies =>
-                        <MovieCard key={`Movie-${movies.id}`}
+                        <MovieCard {...this.props}
+                        key={`Movie-${movies.id}`}
                             movies={movies}
                             deleteMovie={this.props.deleteMovie}
                             />

@@ -33,7 +33,7 @@ export default class MovieForm extends Component {
       // Create the Movie and redirect user to Movie list
       this.props
         .addMovie(Movie)
-        .then(() => this.props.history.push("/Movies"));
+        .then(() => this.props.history.push("/"));
   }
 
   render() {
