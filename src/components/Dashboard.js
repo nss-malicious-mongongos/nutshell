@@ -1,10 +1,14 @@
-import React, {Component} from "react"
+import React, { Component } from "react"
+import ChatList from "./chat/ChatList"
 
 export default class Dashboard extends Component {
     render() {
         return (
             //put your components here
-            "Hello world!" //delete this, I just put it here so it wouldn't throw an error
+            <ChatList messages={this.props.messages}
+                deleteMessage={this.props.deleteMessage}
+                {...this.props}
+            />
         )
     }
 }

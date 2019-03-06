@@ -1,0 +1,15 @@
+.text {font-size: 20px;
+    color: fuchsia;
+    }
+.timestamp {
+    font-size: 10px;
+}
+
+.userName {
+font-size: 10px;
+}
+
+.card-body{
+    background-color: aqua;
+
+}
