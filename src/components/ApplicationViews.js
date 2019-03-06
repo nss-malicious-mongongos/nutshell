@@ -2,8 +2,10 @@ import React, { Component } from "react"
 import { Route } from "react-router-dom"
 
 import TaskManager from "../modules/TaskManager";
+import TaskForm from "./task/TaskForm"
+import TaskEditForm from "./task/TaskEditForm"
 
-import TaskList from "./task/TaskList";
+import Dashboard from "./Dashboard";
 class ApplicationViews extends Component {
 	state = {
 		tasks: []
@@ -21,7 +23,9 @@ class ApplicationViews extends Component {
 	render() {
 		console.log(this.state)
 		return <React.Fragment>
-			<TaskList tasks={this.state.tasks} />
+			<Route path="/" render={(props) => {
+				return <Dashboard {...props} tasks={this.state.tasks} />
+			}} />
 
 			<Route path="/tasks/new" render={(props) => {
 				return <TaskForm {...props} />
