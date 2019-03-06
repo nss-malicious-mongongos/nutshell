@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import IsAuth from "./components/auth/IsAuth"
+import IsAuth from "./components/Auth/IsAuth"
 
 
 class Nutshell extends Component {
@@ -12,13 +12,13 @@ class Nutshell extends Component {
   }
 
   // a function that can be passed down to a component to trigger a render.
- setAuth = () => {
-   this.setState({ authTrigger: this.isAuthenticated() })
- }
+  setAuth = () => {
+    this.setState({ authTrigger: this.isAuthenticated() })
+  }
   render() {
     return <React.Fragment>
-        <IsAuth isAuthenticated={this.isAuthenticated} setAuth={this.setAuth} />
-      </React.Fragment>
+      <IsAuth isAuthenticated={this.isAuthenticated} setAuth={this.setAuth} />
+    </React.Fragment>
   }
 }
 
