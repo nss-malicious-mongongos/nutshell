@@ -1,14 +1,20 @@
-import React, { Component } from "react"
-import { Route } from "react-router-dom"
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
 
 import TaskManager from "../modules/TaskManager";
-import TaskForm from "./task/TaskForm"
-import TaskEditForm from "./task/TaskEditForm"
+import TaskForm from "./task/TaskForm";
+import TaskEditForm from "./task/TaskEditForm";
+
+import UserManager from "../modules/UserManager";
+
+import FriendManager from "../modules/FriendManager";
 
 import Dashboard from "./Dashboard";
 class ApplicationViews extends Component {
 	state = {
-		tasks: []
+		tasks: [],
+		friends: [],
+		users: []
 	}
 
 	componentDidMount() {
@@ -18,6 +24,12 @@ class ApplicationViews extends Component {
 		
 		TaskManager.getQuery(`?userId=${userId}&completed=false&_expand=user`)
 			.then(tasks => newState.tasks = tasks)
+
+			.then(() => UserManager.getAll())
+			.then(users => newState.users = users)
+
+			.then(() => FriendManager.getQuery(`?userId=${userId}&_expand=user`))
+			.then(friends => newState.friends = friends)
 		
 			.then(() => this.setState(newState))
 	}
@@ -55,7 +67,7 @@ class ApplicationViews extends Component {
 		console.log("State is:", this.state)
 		return <React.Fragment>
 			<Route exact path="/" render={(props) => {
-				return <Dashboard {...props} tasks={this.state.tasks} updateTask={this.updateTask} deleteTask={this.deleteTask} />
+				return <Dashboard {...props} tasks={this.state.tasks} updateTask={this.updateTask} deleteTask={this.deleteTask} friends={this.state.friends} users={this.state.users} />
 			}} />
 
 			<Route exact path="/tasks/new" render={(props) => {
