@@ -7,7 +7,6 @@ export default class ArticleList extends Component {
 
     render() {
         const userId = parseInt(sessionStorage.getItem("credentials"))
-        console.log(userId)
         return (
             <div>
                 <h1 className="ArticleHeader ">My Articles </h1>

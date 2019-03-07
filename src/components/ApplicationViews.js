@@ -77,7 +77,17 @@ class ApplicationViews extends Component {
         		})
 			)
 	}
-	
+	deleteFriend = id => {
+		console.log(id)
+		return FriendManager.delete(id)
+			.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+			.then(friends =>
+				this.setState({
+					friends: friends
+				})
+			)
+	}
+
 	addTask = task => {
     	return TaskManager.addTask(task)
 			.then(() => TaskManager.getUserQuery())
@@ -109,10 +119,7 @@ class ApplicationViews extends Component {
   	render() {
 	  
 	console.log("State is:", this.state)
-    console.log(this.props.activeUser)
     return <React.Fragment>
-
-
       <Route exact path="/" render={props => {
         return <Dashboard {...props}
           articles={this.state.articles}
@@ -123,6 +130,7 @@ class ApplicationViews extends Component {
           updateTask={this.updateTask}
 		  deleteTask={this.deleteTask}
 		  friends={this.state.friends}
+		  deleteFriend={this.deleteFriend}
 		  users={this.state.users}
 
         />
