@@ -1,12 +1,14 @@
 import React, { Component } from "react"
-import MovieManager from "../../modules/MovieManager"
+import MovieManager from "../../modules/MovieManager";
 
-export default class MovieEditForm extends Component {
+
+
+export default class EditMovieForm extends Component {
     // Set initial state
     state = {
-      title: "",
-      lead: "",
-      year: ""
+        title: "",
+        lead: "",
+        year:""
     }
 
 
@@ -19,18 +21,25 @@ export default class MovieEditForm extends Component {
     updateExistingMovie = evt => {
       evt.preventDefault()
 
+      if (this.state.year === "") {
+        window.alert("Please select a year");
+      } else {
         const editedMovie = {
-          id: this.props.match.params.movieId,
+          id: this.props.match.params.articleId,
           title: this.state.title,
-          lead: this.state.lead,
-          year: this.state.year
+          lead:this.state.lead,
+          year: this.state.year,
+          
+          userId: parseInt(sessionStorage.getItem("credentials")),
+
+
         };
-        console.log(editedMovie)
 
-            MovieManager.updateMovie(editedMovie)
-            .then(() => this.props.history.push("/Movies"))
+    this.props.updateMovie(editedMovie)
+
+    .then(() => this.props.history.push("/"))
     }
-
+  }
 
     componentDidMount() {
       MovieManager.get(this.props.match.params.movieId)
@@ -39,6 +48,8 @@ export default class MovieEditForm extends Component {
           title: movie.title,
           lead: movie.lead,
           year: movie.year
+
+
         });
       });
     }
@@ -46,10 +57,10 @@ export default class MovieEditForm extends Component {
 
     render() {
       return (
-        <React.Fragment>
+        <>
           <form className="movieForm">
             <div className="form-group">
-              <label htmlFor="title">Movie Title</label>
+              <label htmlFor="title">Title</label>
               <input
                 type="text"
                 required
@@ -59,9 +70,10 @@ export default class MovieEditForm extends Component {
                 value = {this.state.title}
               />
             </div>
+
             <div className="form-group">
-              <label htmlFor="lead">Lead Actor</label>
-              <input
+            <label htmlFor="lead">Lead</label>
+            <input
                 type="text"
                 required
                 className="form-control"
@@ -69,10 +81,10 @@ export default class MovieEditForm extends Component {
                 id="lead"
                 value = {this.state.lead}
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor="year">Release Year</label>
-              <input
+          </div>
+          <div className="form-group">
+            <label htmlFor="year">Year</label>
+            <input
                 type="text"
                 required
                 className="form-control"
@@ -80,16 +92,16 @@ export default class MovieEditForm extends Component {
                 id="year"
                 value = {this.state.year}
               />
-            </div>
+          </div>
             <button
               type="submit"
-              onClick={this.updateExistingmovie}
+              onClick={this.updateExistingMovie}
               className="btn btn-primary"
             >
-              Update
+              Submit
             </button>
           </form>
-        </React.Fragment>
+        </>
       );
     }
 }

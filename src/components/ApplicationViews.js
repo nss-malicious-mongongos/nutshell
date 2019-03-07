@@ -40,6 +40,12 @@ class ApplicationViews extends Component {
 
   }
 
+  updateMovie = editedMovie => {
+    return MovieManager.updateMovie(editedMovie)
+    .then(() => MovieManager.getAll())
+    .then(movies => this.setState({ movies: movies }))
+  }
+
   deleteMovie = id => {
     return MovieManager.deleteMovie(id)
       .then(() => MovieManager.getAll())
@@ -92,6 +98,7 @@ class ApplicationViews extends Component {
       <Route path="/Movies/:movieId(\d+)/edit" render={props => {
         return <MovieEditForm {...props}
           movies={this.state.movies}
+          updateMovie = {this.updateMovie}
         />
       }}
       />
