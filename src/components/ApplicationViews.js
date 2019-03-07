@@ -112,7 +112,9 @@ class ApplicationViews extends Component {
           editArticle={this.EditArticle}
           tasks={this.state.tasks}
           updateTask={this.updateTask}
-          deleteTask={this.deleteTask}
+		  deleteTask={this.deleteTask}
+		  friends={this.state.friends}
+		  users={this.state.users}
 
         />
       }}
