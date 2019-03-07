@@ -8,7 +8,7 @@ export default class ArticleList extends Component {
     render() {
         const userId = parseInt(sessionStorage.getItem("credentials"))
         return (
-            <div>
+            <div className="overflow-auto" id="articles-module">
                 <h1 className="ArticleHeader ">My Articles </h1>
                 <button type="button"
                     className="btn btn-dark"

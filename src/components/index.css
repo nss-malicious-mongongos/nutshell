@@ -1,0 +1,9 @@
+#dashboard {
+    max-height: 550px;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+#tasks-module, #articles-module, #friends-module, #chats-module, #movies-module {
+    flex-basis: 32%;
+    max-height: 270px;
+}

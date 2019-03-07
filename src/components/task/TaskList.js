@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TaskManager from "../../modules/TaskManager";
 
-import "./tasks.css";
 export default class TaskList extends Component {
 
     constructor(props) {

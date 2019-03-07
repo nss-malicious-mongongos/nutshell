@@ -16,13 +16,6 @@ import MovieForm from "./Movies/MovieForm"
 import MovieFullList from "./Movies/MovieFullList"
 import MovieEditForm from "./Movies/MovieEditForm";
 
-import NewArticleForm from "./news/NewArticleForm";
-import EditArticleForm from "./news/EditArticleForm";
-import TaskEditForm from "./task/TaskEditForm"
-
-import TaskForm from "./task/TaskForm"
-import TaskManager from "../modules/TaskManager";
-
 import TaskManager from "../modules/TaskManager";
 import TaskForm from "./task/TaskForm";
 import TaskEditForm from "./task/TaskEditForm";

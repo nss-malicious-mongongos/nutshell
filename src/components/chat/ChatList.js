@@ -8,7 +8,7 @@ export default class ChatList extends Component {
     render() {
         console.log`messages: ${this.props.messages}`
         return (
-            <section className="list">
+            <section className="list overflow-auto" id="chats-module">
                 <h3 className="list-title">Messages</h3>
                 <button type="button"
                     className="btn btn-success"

@@ -5,11 +5,13 @@ import ArticleList from "./news/NewsList"
 import MovieList from "./Movies/MovieList"
 import TaskList from "./task/TaskList"
 
+import "./index.css"
+
 export default class Dashboard extends Component {
     render() {
         const history = this.props.history;
         return (
-            <React.Fragment>
+            <div className="d-flex flex-wrap h-100" id="dashboard">
                 <ChatList messages={this.props.messages}
                     deleteMessage={this.props.deleteMessage}
                     updateMessage={this.props.updateMessage}
@@ -21,7 +23,7 @@ export default class Dashboard extends Component {
                 <ArticleList {...this.props} />
                 <FriendList friends={this.props.friends} users={this.props.users} history={history} deleteFriend={this.props.deleteFriend} />
         
-            </React.Fragment>
+            </div>
         )
     }
 }
