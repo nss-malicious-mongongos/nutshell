@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import ChatList from "./chat/ChatList"
-import React, { Component } from "react"
 import ArticleList from "./news/NewsList"
 import MovieList from "./Movies/MovieList"
 import TaskList from "./task/TaskList"
