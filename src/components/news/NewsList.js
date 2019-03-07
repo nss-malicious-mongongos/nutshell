@@ -33,7 +33,7 @@ export default class ArticleList extends Component {
 
                                 <button
                                     type="button"
-                                    className="editArticleButton"
+                                    className="editArticleButton btn btn-info btn-fill"
                                     onClick={() => {
                                         this.props.history.push(`/articles/${article.id}/edit`);
                                     }}

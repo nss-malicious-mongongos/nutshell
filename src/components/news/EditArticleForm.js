@@ -29,7 +29,7 @@ export default class EditArticleForm extends Component {
           id: this.props.match.params.articleId,
           title: this.state.title,
           synopsis:this.state.synopsis,
-          url:this.state.url,
+          url: this.state.url,
           
           userId: parseInt(sessionStorage.getItem("credentials")),
 
@@ -58,7 +58,7 @@ export default class EditArticleForm extends Component {
 
     render() {
       return (
-        <React.Fragment>
+        <>
           <form className="articleForm">
             <div className="form-group">
               <label htmlFor="title">Title</label>
@@ -103,7 +103,7 @@ export default class EditArticleForm extends Component {
               Submit
             </button>
           </form>
-        </React.Fragment>
+        </>
       );
     }
 }
