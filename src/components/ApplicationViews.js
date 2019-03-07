@@ -15,6 +15,9 @@ import EditArticleForm from "./news/EditArticleForm";
 import TaskEditForm from "./task/TaskEditForm"
 import TaskForm from "./task/TaskForm"
 import TaskManager from "../modules/TaskManager";
+import UserManager from "../modules/UserManager";
+import FriendManager from "../modules/FriendManager";
+import NewFriend from "./friends/NewFriend";
 
 class ApplicationViews extends Component {
   state = {
@@ -120,6 +123,25 @@ class ApplicationViews extends Component {
         })
       )
   }
+  addFriend = friend => {
+    return FriendManager.addFriend(friend)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
+        this.setState({
+          friends: friends
+        })
+      )
+  }
+  deleteFriend = id => {
+    console.log(id)
+    return FriendManager.delete(id)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
+        this.setState({
+          friends: friends
+        })
+      )
+  }
 
   componentDidMount() {
     const newState = {}
@@ -137,6 +159,10 @@ class ApplicationViews extends Component {
 
     TaskManager.getUserQuery()
       .then(tasks => newState.tasks = tasks)
+    UserManager.getAll()
+      .then(users => newState.users = users)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends => newState.friends = friends)
       .then(() => this.setState(newState))
   }
 
@@ -152,6 +178,8 @@ class ApplicationViews extends Component {
           addNewArticle={this.addNewArticle}
           editArticle={this.EditArticle}
           friends={this.state.friends}
+          addFriend={this.addFriend}
+          deleteFriend={this.deleteFriend}
           messages={this.state.messages}
           createMessage={this.createMessage}
           deleteMessage={this.deleteMessage}
@@ -163,6 +191,9 @@ class ApplicationViews extends Component {
         />
       }}
       />
+      <Route exact path="/friends/new" render={(props) => {
+        return <NewFriend {...props} users={this.state.users} friends={this.state.friends} addFriend={this.addFriend} />
+      }} />
 
       <Route exact path="/Movies" render={props => {
         return <MovieFullList {...props}

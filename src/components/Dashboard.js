@@ -3,6 +3,7 @@ import ChatList from "./chat/ChatList"
 import ArticleList from "./news/NewsList"
 import MovieList from "./Movies/MovieList"
 import TaskList from "./task/TaskList"
+import FriendList from "./friends/FriendList";
 
 export default class Dashboard extends Component {
     render() {
@@ -17,10 +18,8 @@ export default class Dashboard extends Component {
                 />
                 <MovieList {...this.props} />
                 <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
-                <ArticleList {...this.props} />
-                <ArticleList {...this.props} friends={this.props.friends} />
-                <MovieList {...this.props} />
-                <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
+                <ArticleList {...this.props}
+                    friends={this.props.friends} />
 
             </React.Fragment>
         )
