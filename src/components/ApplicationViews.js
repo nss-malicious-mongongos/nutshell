@@ -151,14 +151,11 @@ class ApplicationViews extends Component {
 			.then(friends => newState.friends = friends)
 
 			.then(() => this.setState(newState))
-
-
-			.then(() => this.setState(newState))
 	}
 
 	render() {
 
-		console.log(this.props.activeUser)
+		console.log(this.state)
 		return <React.Fragment>
 
 			<Route exact path="/" render={props => {
@@ -230,15 +227,6 @@ class ApplicationViews extends Component {
 				return <TaskEditForm {...props}
 					updateTask={this.updateTask} />
 			}} />
-
-			<Route exact path="/tasks/new" render={(props) => {
-				return <TaskForm {...props} addTask={this.addTask} />
-			}} />
-
-			<Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
-				return <TaskEditForm {...props} updateTask={this.updateTask} />
-			}} />
-
 
 		</React.Fragment>
 	}
