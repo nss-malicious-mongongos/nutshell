@@ -7,7 +7,15 @@ export default class ArticleList extends Component {
 
     render() {
         const userId = parseInt(sessionStorage.getItem("credentials"))
-        console.log(userId)
+
+        const friendarray = this.props.friends.flatMap(friend =>
+            this.props.articles.filter(
+                o => o.userId === friend.otherPersonId)) || []
+
+        console.log(friendarray)
+        const friendArticleArray = friendarray || []
+
+
         return (
             <div>
                 <h1 className="ArticleHeader ">My Articles </h1>
@@ -29,6 +37,7 @@ export default class ArticleList extends Component {
                                     <a href={article.url}>{article.url}</a>
 
                                 </div>
+
                                 <button className="btn btn-danger" onClick={() => { this.props.deleteArticle(article.id) }}>Delete Article </button>
 
                                 <button
@@ -44,7 +53,37 @@ export default class ArticleList extends Component {
                         )
 
                 }
-            </div>
+                <h1>My Friends News Articles</h1>
+
+
+
+
+
+
+                {
+                    friendArticleArray.map(article =>
+
+                        <section className="articleContainer ">
+                            <div className="friendArticles article-card card shadow bg-light">
+                                <h3>{article.title}</h3>
+                                <p>{article.synopsis}</p>
+                                <a href={article.url}>{article.url}</a>
+                                <h4>User Name: {article.user.username}</h4>
+
+
+
+
+                            </div>
+                        </section>
+                    )
+
+                }
+
+
+
+
+
+            </div >
         )
 
     }

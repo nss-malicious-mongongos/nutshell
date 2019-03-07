@@ -11,7 +11,7 @@ export default {
         }).then(e => e.json())
       },
       getAll() {
-        return fetch(`${Settings.remoteURL}/articles?_sort=timestamp&_order=desc`).then(e => e.json())
+        return fetch(`${Settings.remoteURL}/articles?_expand=user&expand=type`).then(e => e.json())
       },
       CreateNewArticle(obj) {
         return fetch(`${Settings.remoteURL}/articles`, {
@@ -30,6 +30,9 @@ export default {
           },
           body: JSON.stringify(editedArticle)
         }).then(data => data.json());
+      },
+      getallExpanded() {
+        return fetch("http://localhost:3003/articles?_expand=user&expand=type").then(e => e.json())
       }
 
 
