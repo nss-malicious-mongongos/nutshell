@@ -1,59 +1,70 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
+import ChatManager from "../../modules/ChatManager"
 
 export default class ChatEditForm extends Component {
     // Set initial state
     state = {
         text: "",
-    };
+        timestamp: "",
+        userId: "",
+        id: ""
+    }
 
-    // Update state whenever an input field is edited
     handleFieldChange = evt => {
-        const stateToChange = {};
-        stateToChange[evt.target.id] = evt.target.value;
-        this.setState(stateToChange);
-    };
-    /*
-          Local method for validation, creating message object, and
-          invoking the function reference passed from parent component
-       */
-    createMessageObject = evt => {
+        const stateToChange = {}
+        stateToChange[evt.target.id] = evt.target.value
+        this.setState(stateToChange)
+    }
+
+    updateExistingMessage = evt => {
         evt.preventDefault()
-        const message = {
-            text: this.state.text,
-            userId: parseInt(sessionStorage.credentials),
-            timestamp: new Date().toLocaleString()
+        {
+            const editedMessage = {
+                id: this.props.match.params.messageId,
+                text: this.state.text,
+                userId: this.state.userId,
+                timestamp: this.state.timestamp
+            };
+
+            this.props.updateMessage(editedMessage)
+                .then(() => this.props.history.push("/"))
         }
+    }
 
-        // Create the message and redirect user to message list
-        this.props
-            .createMessage(message)
-            .then(() => this.props.history.push("/"));
-
-    };
+    componentDidMount() {
+        ChatManager.get(this.props.match.params.messageId)
+            .then(message => {
+                this.setState({
+                    text: message.text,
+                    userId: message.userId,
+                    timestamp: message.timestamp,
+                });
+            });
+    }
 
     render() {
-        console.log(sessionStorage.credentials)
         return (
             <React.Fragment>
-                <form className="messageForm">
+                <form className="chatForm">
                     <div className="form-group">
-                        <label htmlFor="text">New Message</label>
+                        <label htmlFor="text">Message name</label>
                         <input
                             type="text"
                             required
                             className="form-control"
                             onChange={this.handleFieldChange}
                             id="text"
-                            placeholder="Type message here"
+                            value={this.state.text}
                         />
                     </div>
+
                     <button
                         type="submit"
-                        onClick={this.createMessageObject}
+                        onClick={this.updateExistingMessage}
                         className="btn btn-primary"
                     >
                         Submit
-          </button>
+            </button>
                 </form>
             </React.Fragment>
         );

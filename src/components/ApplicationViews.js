@@ -112,13 +112,10 @@ class ApplicationViews extends Component {
       .then(() => this.setState(newState))
   }
 
-
-
   render() {
 
     console.log(this.props.activeUser)
     return <React.Fragment>
-
 
       <Route exact path="/" render={props => {
         return <Dashboard {...props}
@@ -170,12 +167,9 @@ class ApplicationViews extends Component {
         return <TaskEditForm {...props} updateTask={this.updateTask} />
       }} />
 
-
     </React.Fragment>
   }
-
 }
-
 export default ApplicationViews
 
 

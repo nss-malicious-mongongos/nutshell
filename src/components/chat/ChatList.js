@@ -2,13 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom"
 import "./chatList.css"
-
+import ChatManager from "../../modules/ChatManager"
 
 export default class ChatList extends Component {
     render() {
-        console.log(this.props.messages)
+        console.log`messages: ${this.props.messages}`
         return (
             <section className="list">
+                <h3 className="list-title">Messages</h3>
                 <button type="button"
                     className="btn btn-success"
                     onClick={() => {
@@ -25,14 +26,18 @@ export default class ChatList extends Component {
                                 <div className="text"> {message.text} </div>
                                 <div className="userName"> {`${message.user.username}`}</div>
                                 <div className="timestamp"> {`${message.timestamp}`}</div>
-                                <button
-                                    type="button"
-                                    className="btn btn-success"
-                                    onClick={() => {
-                                        this.props.history.push(`/messages/${this.props.message.id}/edit`);
-                                    }}
-                                >Edit
+                                {/* Show edit button only if the message is from the logged in user */}
+                                {(parseInt(sessionStorage.credentials) === message.userId) ?
+                                    <button
+                                        type="button"
+                                        className="btn btn-success"
+                                        onClick={() => {
+                                            this.props.history.push(`/messages/${message.id}/edit`);
+                                        }}
+                                    >Edit
                                 </button>
+                                    : null}
+
                                 <button
                                     onClick={() =>
                                         this.props.deleteMessage(message.id)
@@ -45,6 +50,7 @@ export default class ChatList extends Component {
                             </h4>
                         </div>
                     </div>
+
                 )
                 }
             </section>
