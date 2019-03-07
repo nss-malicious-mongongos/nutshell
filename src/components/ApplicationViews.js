@@ -26,7 +26,7 @@ class ApplicationViews extends Component {
 			.then(() => UserManager.getAll())
 			.then(users => newState.users = users)
 
-			.then(() => FriendManager.getQuery(`?userId=${userId}&_expand=user`))
+			.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
 			.then(friends => newState.friends = friends)
 		
 			.then(() => this.setState(newState))
