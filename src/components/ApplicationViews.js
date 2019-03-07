@@ -1,17 +1,46 @@
+import ArticleManager from "../modules/ArticleManager";
 import Dashboard from "./Dashboard"
+import EditArticleForm from "./news/EditArticleForm";
 import EventForm from "./event/EventForm";
 import EventManager from "../modules/EventManager";
+import NewArticleForm from "./news/NewArticleForm";
 import React, { Component } from "react"
 import { Route } from "react-router-dom"
+import TaskManager from "../modules/TaskManager";
 import TaskEditForm from "./task/TaskEditForm"
 import TaskForm from "./task/TaskForm"
-import TaskManager from "../modules/TaskManager";
 
-class ApplicationViews extends Component {
+export default class ApplicationViews extends Component {
   state = {
-    tasks: [],
+    articles: [],
     events: [],
-    showPastEvents: false
+    showPastEvents: false,
+    tasks: []
+  }
+
+  EditArticle = (editedArticleObject) => {
+    return ArticleManager.EditArticle(editedArticleObject)
+      .then(() => ArticleManager.getAll())
+      .then(articles => this.setState({ articles: articles })
+      )
+  };
+
+  addNewArticle = Article => {
+    return ArticleManager.CreateNewArticle(Article)
+      .then(() => ArticleManager.getAll())
+      .then(articles =>
+        this.setState({
+          articles: articles
+        })
+      )
+  }
+
+  deleteArticle = id => {
+    return ArticleManager.deleteArticle(id)
+      .then(() => ArticleManager.getAll())
+      .then(articles => this.setState({ articles: articles })
+      )
+
   }
 
   addTask = task => {
@@ -33,7 +62,6 @@ class ApplicationViews extends Component {
         })
       )
   }
-
   deleteTask = id => {
     TaskManager.delete(id)
       .then(() => TaskManager.getUserQuery())
@@ -75,6 +103,10 @@ class ApplicationViews extends Component {
     const newState = {};
     this.refreshEvents()
 
+    ArticleManager.getAll()
+      .then(articles => newState.articles = articles)
+      .then(() => this.setState(newState))
+
     TaskManager.getUserQuery()
       .then(tasks => newState.tasks = tasks)
       .then(() => this.setState(newState))
@@ -84,6 +116,10 @@ class ApplicationViews extends Component {
     return <React.Fragment>
       <Route exact path="/" render={props => {
         return <Dashboard {...props}
+          articles={this.state.articles}
+          deleteArticle={this.deleteArticle}
+          addNewArticle={this.addNewArticle}
+          editArticle={this.EditArticle}
           showPastEvents={this.state.showPastEvents}
           showPastEventsToggle={this.showPastEventsToggle}
           events={this.state.events}
@@ -103,7 +139,24 @@ class ApplicationViews extends Component {
       <Route path="/newEvent" render={props => {
         return <EventForm {...props} addEvent={this.addEvent} />
       }} />
+      <Route exact path="/articles/new" render={props => {
+        return <NewArticleForm {...props}
+          articles={this.state.articles}
+          addNewArticle={this.addNewArticle}
+
+
+        />
+      }}
+      />
+
+      <Route path="/articles/:articleId(\d+)/edit" render={props => {
+        return <EditArticleForm {...props}
+          editArticle={this.EditArticle}
+          articles={this.state.articles}
+
+        />
+      }}
+      />
     </React.Fragment>
   }
 }
-export default ApplicationViews;
