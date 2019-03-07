@@ -4,6 +4,7 @@ import EditArticleForm from "./news/EditArticleForm";
 import EventEditForm from "./event/EventEditForm";
 import EventForm from "./event/EventForm";
 import EventManager from "../modules/EventManager";
+import FriendManager from "../modules/FriendManager";
 import MovieEditForm from "./Movies/MovieEditForm";
 import MovieForm from "./Movies/MovieForm"
 import MovieFullList from "./Movies/MovieFullList"
@@ -14,21 +15,29 @@ import { Route } from "react-router-dom"
 import TaskEditForm from "./task/TaskEditForm"
 import TaskForm from "./task/TaskForm"
 import TaskManager from "../modules/TaskManager";
+import UserManager from "../modules/UserManager";
 
 export default class ApplicationViews extends Component {
   state = {
     articles: [],
     events: [],
+    friends: [],
     movies: [],
-    tasks: []
+    tasks: [],
+    users: []
   }
 
-  EditArticle = (editedArticleObject) => {
-    return ArticleManager.EditArticle(editedArticleObject)
-      .then(() => ArticleManager.getAll())
-      .then(articles => this.setState({ articles: articles })
-      )
-  };
+  addEvent = (event) => {
+    EventManager.addEvent(event)
+      .then(() => EventManager.getAll())
+      .then(events => this.setState({ events: events }))
+  }
+
+  addMovie = movie => {
+    return MovieManager.addMovie(movie)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
 
   addNewArticle = Article => {
     return ArticleManager.CreateNewArticle(Article)
@@ -38,32 +47,6 @@ export default class ApplicationViews extends Component {
           articles: articles
         })
       )
-  }
-
-  deleteArticle = id => {
-    return ArticleManager.deleteArticle(id)
-      .then(() => ArticleManager.getAll())
-      .then(articles => this.setState({ articles: articles })
-      )
-
-  }
-
-  updateMovie = editedMovie => {
-    return MovieManager.updateMovie(editedMovie)
-      .then(() => MovieManager.getAll())
-      .then(movies => this.setState({ movies: movies }))
-  }
-
-  deleteMovie = id => {
-    return MovieManager.deleteMovie(id)
-      .then(() => MovieManager.getAll())
-      .then(movies => this.setState({ movies: movies }))
-  }
-
-  addMovie = movie => {
-    return MovieManager.addMovie(movie)
-      .then(() => MovieManager.getAll())
-      .then(movies => this.setState({ movies: movies }))
   }
 
   addTask = task => {
@@ -76,15 +59,25 @@ export default class ApplicationViews extends Component {
       )
   }
 
-  updateTask = editedTask => {
-    return TaskManager.edit(editedTask)
-      .then(() => TaskManager.getUserQuery())
-      .then(tasks =>
-        this.setState({
-          tasks: tasks
-        })
+  deleteArticle = id => {
+    return ArticleManager.deleteArticle(id)
+      .then(() => ArticleManager.getAll())
+      .then(articles => this.setState({ articles: articles })
       )
   }
+
+  deleteEvent = (id) => {
+    EventManager.delete(id)
+      .then(() => EventManager.getAll())
+      .then(() => this.refreshEvents())
+  }
+
+  deleteMovie = id => {
+    return MovieManager.deleteMovie(id)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
+
   deleteTask = id => {
     TaskManager.delete(id)
       .then(() => TaskManager.getUserQuery())
@@ -95,6 +88,13 @@ export default class ApplicationViews extends Component {
       )
   }
 
+  EditArticle = (editedArticleObject) => {
+    return ArticleManager.EditArticle(editedArticleObject)
+      .then(() => ArticleManager.getAll())
+      .then(articles => this.setState({ articles: articles })
+      )
+  };
+
   refreshEvents = () => {
     const newState = {}
     EventManager.getAll()
@@ -104,34 +104,52 @@ export default class ApplicationViews extends Component {
       })
   }
 
-  addEvent = (event) => {
-    EventManager.addEvent(event)
-      .then(() => EventManager.getAll())
-      .then(events => this.setState({ events: events }))
-  }
-
-  deleteEvent = (id) => {
-    EventManager.delete(id)
-      .then(() => EventManager.getAll())
-      .then(() => this.refreshEvents())
-  }
-
   updateEvent = obj => {
     return EventManager.updateEvent(obj)
       .then(() => this.refreshEvents())
   }
 
+  updateMovie = editedMovie => {
+    return MovieManager.updateMovie(editedMovie)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
+
+  updateTask = editedTask => {
+    return TaskManager.edit(editedTask)
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks =>
+        this.setState({
+          tasks: tasks
+        })
+      )
+  }
+
+
   componentDidMount() {
     const newState = {};
     this.refreshEvents()
 
-    MovieManager.getAll()
-      .then(movies => newState.movies = movies)
     ArticleManager.getAll()
       .then(articles => newState.articles = articles)
       .then(() => this.setState(newState))
+    MovieManager.getAll()
+      .then(movies => newState.movies = movies)
     TaskManager.getUserQuery()
       .then(tasks => newState.tasks = tasks)
+      .then(() => this.setState(newState))
+    UserManager.getAll()
+      .then(users => newState.users = users)
+
+      .then(() => ArticleManager.getAll())
+      .then(articles => newState.articles = articles)
+
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks => newState.tasks = tasks)
+
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends => newState.friends = friends)
+
       .then(() => this.setState(newState))
   }
 
@@ -139,17 +157,19 @@ export default class ApplicationViews extends Component {
     return <React.Fragment>
       <Route exact path="/" render={props => {
         return <Dashboard {...props}
+          addNewArticle={this.addNewArticle}
           articles={this.state.articles}
           deleteArticle={this.deleteArticle}
-          addNewArticle={this.addNewArticle}
+          deleteEvent={this.deleteEvent}
+          deleteMovie={this.deleteMovie}
+          deleteTask={this.deleteTask}
           editArticle={this.EditArticle}
           events={this.state.events}
-          deleteEvent={this.deleteEvent}
+          friends={this.state.friends}
           movies={this.state.movies}
-          deleteMovie={this.deleteMovie}
           tasks={this.state.tasks}
           updateTask={this.updateTask}
-          deleteTask={this.deleteTask}
+          users={this.state.users}
         />
       }}
       />
