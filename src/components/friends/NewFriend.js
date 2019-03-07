@@ -23,7 +23,7 @@ export default class NewFriend extends Component {
 
             const friend = {
                 userId: parseInt(sessionStorage.getItem("credentials")),
-                friendId: friendId
+                otherPersonId: friendId
             };
     
         this.props.addFriend(friend)
@@ -36,7 +36,7 @@ export default class NewFriend extends Component {
             <React.Fragment>
                 <form className="friendForm">
                     <div className="form-group">
-                        <label htmlFor="friendName">Friend username</label>
+                        <label htmlFor="friendName">Friend's username</label>
                             <input type="text" className="form-control" onChange={this.handleFieldChange} id="friendName" placeholder="type a username" />
                     </div>
                     <button type="submit" onClick={this.createNewFriend} className="btn btn-primary">Submit</button>
