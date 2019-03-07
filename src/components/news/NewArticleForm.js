@@ -25,6 +25,7 @@ export default class NewArticleForm extends Component {
             const article = {
                 title: this.state.title,
                 synopsis: this.state.synopsis,
+                url: this.state.url,
                 userId: parseInt(sessionStorage.getItem("credentials")),
                 timestamp: moment().format('LLL')
             };
