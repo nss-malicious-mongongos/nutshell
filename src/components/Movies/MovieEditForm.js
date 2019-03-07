@@ -25,7 +25,7 @@ export default class EditMovieForm extends Component {
         window.alert("Please select a year");
       } else {
         const editedMovie = {
-          id: this.props.match.params.articleId,
+          id: this.props.match.params.movieId,
           title: this.state.title,
           lead:this.state.lead,
           year: this.state.year,
