@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MovieDashCard from './MovieDashCard'
+import MovieCard from './MovieCard'
 
 class MovieList extends Component {
 
@@ -21,12 +21,19 @@ class MovieList extends Component {
                         }>
                     Add Movie
                 </button>
+                <button type="button"
+                        className="btn btn-success"
+                        onClick={() => {
+                            this.props.history.push("/")}
+                        }>
+                    Back to Dashboard
+                </button>
             </div>
             <article className="card movies card">
                 {
                     this.props.movies.filter(movies => movies.userId === userId)
                     .map(movies =>
-                        <MovieDashCard {...this.props}
+                        <MovieCard {...this.props}
                         key={`Movie-${movies.id}`}
                             movies={movies}
                             deleteMovie={this.props.deleteMovie}
@@ -34,13 +41,6 @@ class MovieList extends Component {
                     )
                 }
             </article>
-            <button type="button"
-                        className="btn btn-success"
-                        onClick={() => {
-                            this.props.history.push("/Movies")}
-                        }>
-                    See More Movie Info
-                </button>
             </React.Fragment>
         )
     }

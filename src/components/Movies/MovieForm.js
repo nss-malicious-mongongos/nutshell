@@ -6,7 +6,8 @@ export default class MovieForm extends Component {
   state = {
     title: "",
     lead: "",
-    year: ""
+    year: "",
+    userId: ""
   };
 
   // Update state whenever an input field is edited
@@ -26,8 +27,8 @@ export default class MovieForm extends Component {
       const Movie = {
         title: this.state.title,
         lead: this.state.lead,
-        // Make sure the employeeId is saved to the database as a number since it is a foreign key.
-        year: this.state.year
+        year: this.state.year,
+        userId: parseInt(sessionStorage.getItem("credentials"))
       }
 
       // Create the Movie and redirect user to Movie list

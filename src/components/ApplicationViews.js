@@ -5,6 +5,7 @@ import ArticleManager from "../modules/ArticleManager";
 import MovieManager from "../modules/MovieManager"
 import MovieForm from "./Movies/MovieForm"
 import MovieList from "./Movies/MovieList"
+import MovieFullList from "./Movies/MovieFullList"
 import MovieEditForm from "./Movies/MovieEditForm";
 import NewArticleForm from "./news/NewArticleForm";
 import EditArticleForm from "./news/EditArticleForm";
@@ -124,7 +125,7 @@ class ApplicationViews extends Component {
       />
 
       <Route exact path="/Movies" render={props => {
-        return <MovieList {...props}
+        return <MovieFullList {...props}
           movies={this.state.movies}
           deleteMovie={this.deleteMovie}
         />
