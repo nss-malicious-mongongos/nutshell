@@ -7,7 +7,8 @@ export default class ChatEditForm extends Component {
         text: "",
         timestamp: "",
         userId: "",
-        id: ""
+        id: "",
+        editTime: ""
     }
 
     handleFieldChange = evt => {
@@ -23,7 +24,8 @@ export default class ChatEditForm extends Component {
                 id: this.props.match.params.messageId,
                 text: this.state.text,
                 userId: this.state.userId,
-                timestamp: this.state.timestamp
+                timestamp: this.state.timestamp,
+                editTime: this.state.editTime
             };
 
             this.props.updateMessage(editedMessage)
@@ -38,6 +40,7 @@ export default class ChatEditForm extends Component {
                     text: message.text,
                     userId: message.userId,
                     timestamp: message.timestamp,
+                    editTime: new Date().toLocaleString(),
                 });
             });
     }

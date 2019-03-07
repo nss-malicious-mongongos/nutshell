@@ -2,7 +2,8 @@ import React, { Component } from "react"
 import { Route } from "react-router-dom"
 import ArticleManager from "../modules/ArticleManager";
 import ChatEditForm from "../components/chat/ChatEditForm"
-import ChatForm from "../components/chat/ChatForm"
+// import ChatForm from "../components/chat/ChatForm"
+import ChatList from "../components/chat/ChatList"
 import ChatManager from "../modules/ChatManager"
 import Dashboard from "./Dashboard"
 import MovieManager from "../modules/MovieManager"
@@ -137,7 +138,6 @@ class ApplicationViews extends Component {
     TaskManager.getUserQuery()
       .then(tasks => newState.tasks = tasks)
       .then(() => this.setState(newState))
-
   }
 
   render() {
@@ -152,6 +152,7 @@ class ApplicationViews extends Component {
           addNewArticle={this.addNewArticle}
           editArticle={this.EditArticle}
           messages={this.state.messages}
+          createMessage={this.createMessage}
           deleteMessage={this.deleteMessage}
           movies={this.state.movies}
           deleteMovie={this.deleteMovie}
@@ -206,7 +207,7 @@ class ApplicationViews extends Component {
         }}
       />
       <Route exact path="/messages/new" render={props => {
-        return <ChatForm {...props}
+        return <ChatList {...props}
           messages={this.state.messages}
           createMessage={this.createMessage} />
       }}

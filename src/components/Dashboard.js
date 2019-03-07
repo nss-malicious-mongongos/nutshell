@@ -10,6 +10,7 @@ export default class Dashboard extends Component {
         return (
             <React.Fragment>
                 <ChatList messages={this.props.messages}
+                    createMessage={this.props.createMessage}
                     deleteMessage={this.props.deleteMessage}
                     updateMessage={this.props.updateMessage}
                     {...this.props}
