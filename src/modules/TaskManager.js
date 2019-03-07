@@ -1,5 +1,7 @@
 import Settings from "./Settings"
 
+const userId = parseInt(sessionStorage.getItem("credentials"));
+
 export default {
     get(id) {
         return fetch(`${Settings.remoteURL}/tasks/${id}`).then(e => e.json())
@@ -36,5 +38,9 @@ export default {
     },
     getQuery(query) {
         return fetch(`${Settings.remoteURL}/tasks${query}`).then(e => e.json())
+    },
+    getUserQuery() {
+        return fetch(`${Settings.remoteURL}/tasks/?userId=${userId}&completed=false&_expand=user`)
+        .then(e => e.json())
     }
 }
