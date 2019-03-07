@@ -28,12 +28,9 @@ export default class ChatList extends Component {
         this.props
             .createMessage(message)
             .then(() => this.props.history.push("/"));
-
     };
 
     render() {
-        console.log(`PROPS: ${this.props}`)
-
         return (
             <article className="chat">
                 <form className="messageForm">
@@ -52,22 +49,11 @@ export default class ChatList extends Component {
                         type="submit"
                         onClick={this.createMessageObject}
                         className="btn btn-primary"
-                    >
-                        Submit
-          </button>
+                    >Submit
+                    </button>
                 </form>
                 <section className="chat-output">
                     <h3 className="list-title">Messages</h3>
-
-
-                    {/* <button type="button"
-                    className="btn btn-success"
-                    onClick={() => {
-                        this.props.history.push("/messages/new")
-                    }
-                    }>
-                    Add Message
-               </button> */}
 
                     {this.props.messages.map(message =>
                         <div key={message.id} className="card ">
@@ -77,7 +63,7 @@ export default class ChatList extends Component {
                                     <div className="userName"> {`${message.user.username}`}</div>
                                     <div className="timestamp"> {`Created: ${message.timestamp}`}</div>
 
-                                    {(message.editTime !== undefined || null) ?
+                                    {(message.editTime !== "" || null || undefined) ?
                                         <div className="timestamp">
                                             {`Edited: ${message.editTime}`}</div>
                                         : null
