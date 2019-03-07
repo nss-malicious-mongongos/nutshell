@@ -19,10 +19,8 @@ class ApplicationViews extends Component {
 
 	componentDidMount() {
 		const newState = {};
-
-		const userId = parseInt(sessionStorage.getItem("credentials"))
 		
-		TaskManager.getQuery(`?userId=${userId}&completed=false&_expand=user`)
+		TaskManager.getUserQuery()
 			.then(tasks => newState.tasks = tasks)
 
 			.then(() => UserManager.getAll())
@@ -36,7 +34,7 @@ class ApplicationViews extends Component {
 	
 	addTask = task => {
 		return TaskManager.addTask(task)
-			.then(() => TaskManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&completed=false&_expand=user`))
+			.then(() => TaskManager.getUserQuery())
 			.then(tasks => 
 				this.setState({
 					tasks: tasks
@@ -45,7 +43,7 @@ class ApplicationViews extends Component {
 	}
 	updateTask = editedTask => {
 		return TaskManager.edit(editedTask)
-			.then(() => TaskManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&completed=false&_expand=user`))
+			.then(() => TaskManager.getUserQuery())
 			.then(tasks => 
 				this.setState({
 					tasks: tasks
@@ -54,7 +52,7 @@ class ApplicationViews extends Component {
 	}
 	deleteTask = id => {
 		TaskManager.delete(id)
-			.then(() => TaskManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&completed=false&_expand=user`))
+			.then(() => TaskManager.getUserQuery())
 			.then(tasks => 
 				this.setState({
 					tasks: tasks
