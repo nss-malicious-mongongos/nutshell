@@ -12,7 +12,7 @@ class MovieList extends Component {
         console.log(userId)
         console.log("render -- MovieList")
         return (
-            <React.Fragment>
+            <div>
             <div className="centerChildren">
             <button type="button"
                         className="btn btn-success"
@@ -41,7 +41,7 @@ class MovieList extends Component {
                         }>
                     See More Movie Info
                 </button>
-            </React.Fragment>
+            </div>
         )
     }
 }
