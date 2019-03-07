@@ -6,15 +6,17 @@ import MovieManager from "../modules/MovieManager"
 import MovieForm from "./Movies/MovieForm"
 import MovieList from "./Movies/MovieList"
 import MovieEditForm from "./Movies/MovieEditForm";
+import TaskManager from "../modules/TaskManager";
+import TaskForm from "./task/TaskForm"
+import TaskEditForm from "./task/TaskEditForm"
 
 
 class ApplicationViews extends Component {
   state = {
     articles: [],
-    movies: []
+    movies: [],
+    tasks: []
   }
-
-  movies = MovieManager.getAll()
 
   EditArticle = (editedArticleObject) => {
     return ArticleManager.EditArticle(editedArticleObject)
@@ -66,7 +68,38 @@ class ApplicationViews extends Component {
     ArticleManager.getAll()
       .then(articles => newState.articles = articles)
       .then(() => this.setState(newState))
+    TaskManager.getUserQuery()
+			.then(tasks => newState.tasks = tasks)
+			.then(() => this.setState(newState))
   }
+  
+	addTask = task => {
+		return TaskManager.addTask(task)
+			.then(() => TaskManager.getUserQuery())
+			.then(tasks => 
+				this.setState({
+					tasks: tasks
+				})
+			)
+	}
+	updateTask = editedTask => {
+		return TaskManager.edit(editedTask)
+			.then(() => TaskManager.getUserQuery())
+			.then(tasks => 
+				this.setState({
+					tasks: tasks
+				})
+			)
+	}
+	deleteTask = id => {
+		TaskManager.delete(id)
+			.then(() => TaskManager.getUserQuery())
+			.then(tasks => 
+				this.setState({
+					tasks: tasks
+				})
+			)
+    }
 
   render() {
 
@@ -83,6 +116,9 @@ class ApplicationViews extends Component {
           editArticle={this.EditArticle}
           movies={this.state.movies}
           deleteMovie={this.deleteMovie}
+          tasks={this.state.tasks}
+          updateTask={this.updateTask}
+          deleteTask={this.deleteTask} 
 
         />
       }}
@@ -110,9 +146,17 @@ class ApplicationViews extends Component {
         />
       }}
       />
+			<Route exact path="/tasks/new" render={(props) => {
+        return <TaskForm {...props} 
+        addTask={this.addTask} />
+			}} />
 
+			<Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
+        return <TaskEditForm {...props} 
+        updateTask={this.updateTask} />
+			}} />
     </React.Fragment>
   }
 }
 
-export default ApplicationViews
+export default ApplicationViews;
