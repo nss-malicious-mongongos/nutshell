@@ -16,7 +16,8 @@ export default class ChatForm extends Component {
     const message = {
       text: this.state.text,
       userId: parseInt(sessionStorage.credentials),
-      timestamp: new Date().toLocaleString()
+      timestamp: new Date().toLocaleString(),
+      editTime: ""
     }
 
     this.props
