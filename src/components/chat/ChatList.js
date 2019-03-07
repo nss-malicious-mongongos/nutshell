@@ -28,23 +28,26 @@ export default class ChatList extends Component {
                                 <div className="timestamp"> {`${message.timestamp}`}</div>
                                 {/* Show edit button only if the message is from the logged in user */}
                                 {(parseInt(sessionStorage.credentials) === message.userId) ?
-                                    <button
-                                        type="button"
-                                        className="btn btn-success"
-                                        onClick={() => {
-                                            this.props.history.push(`/messages/${message.id}/edit`);
-                                        }}
-                                    >Edit
+                                    <div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-success"
+                                            onClick={() => {
+                                                this.props.history.push(`/messages/${message.id}/edit`);
+                                            }}
+                                        >Edit
                                 </button>
+                                        <button
+                                            onClick={() =>
+                                                this.props.deleteMessage(message.id)
+                                                    .then(() => this.props.history.push("/"))
+                                            }
+                                            className="btn btn-success">Delete
+                                </button>
+                                    </div>
                                     : null}
 
-                                <button
-                                    onClick={() =>
-                                        this.props.deleteMessage(message.id)
-                                            .then(() => this.props.history.push("/"))
-                                    }
-                                    className="btn btn-success">Delete
-                                </button>
+
                                 {/* <Link className="nav-link" to={`/messages/${message.id}`}>
                                 </Link> */}
                             </h4>

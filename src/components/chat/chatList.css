@@ -5,6 +5,9 @@
     font-size: 10px;
 }
 
+.card {
+    max-height: 100px;
+}
 .userName {
 font-size: 10px;
 }
