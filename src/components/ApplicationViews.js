@@ -8,7 +8,6 @@ import EditArticleForm from "./news/EditArticleForm";
 
 import MovieManager from "../modules/MovieManager"
 import MovieForm from "./Movies/MovieForm"
-import MovieList from "./Movies/MovieList"
 import MovieFullList from "./Movies/MovieFullList"
 import MovieEditForm from "./Movies/MovieEditForm";
 
@@ -42,14 +41,15 @@ class ApplicationViews extends Component {
 			
 			.then(() => MovieManager.getAll())
 			.then(movies => newState.movies = movies)
-
+			
 			.then(() => TaskManager.getUserQuery())
 			.then(tasks => newState.tasks = tasks)
-
+			
 			.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
 			.then(friends => newState.friends = friends)
-		
+			
 			.then(() => this.setState(newState))
+			.then(() => console.log("state is:", this.state))
 	}
 
 		EditArticle = (editedArticleObject) => {
@@ -144,7 +144,6 @@ class ApplicationViews extends Component {
       
   render() {
 
-    console.log("state is:", this.state)
     return <React.Fragment>
 
       <Route exact path="/" render={props => {
@@ -154,7 +153,7 @@ class ApplicationViews extends Component {
           addNewArticle={this.addNewArticle}
           editArticle={this.EditArticle}
           movies={this.state.movies}
-          deleteMovie={this.deleteMovie}
+		  deleteMovie={this.deleteMovie}
           tasks={this.state.tasks}
           updateTask={this.updateTask}
 		  deleteTask={this.deleteTask}

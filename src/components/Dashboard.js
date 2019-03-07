@@ -16,5 +16,6 @@ export default class Dashboard extends Component {
                 <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
         
             </React.Fragment>
+        )
     }
 }

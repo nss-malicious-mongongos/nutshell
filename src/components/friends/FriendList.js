@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 export default class FriendList extends Component {
     render() {
-        console.log("Friends are:", this.props.friends)
         return (
             <div className="overflow-auto" id="friends-module">
                 <h2>Friends List</h2>
