@@ -4,7 +4,6 @@ import Dashboard from "./Dashboard";
 import ArticleManager from "../modules/ArticleManager";
 import MovieManager from "../modules/MovieManager"
 import MovieForm from "./Movies/MovieForm"
-import MovieList from "./Movies/MovieList"
 import MovieFullList from "./Movies/MovieFullList"
 import MovieEditForm from "./Movies/MovieEditForm";
 import NewArticleForm from "./news/NewArticleForm";
