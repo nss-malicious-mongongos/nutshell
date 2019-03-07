@@ -13,6 +13,15 @@ export default {
     getAll() {
         return fetch(`${Settings.remoteURL}/messages?_expand=user`).then(e => e.json());
     },
+    put(editedMessage) {
+        return fetch(`${Settings.remoteURL}/messages/${editedMessage.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(editedMessage)
+        }).then(data => data.json());
+    },
     post(newMessage) {
         return fetch(`${Settings.remoteURL}/messages`, {
             method: "POST",

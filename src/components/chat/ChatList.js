@@ -29,7 +29,7 @@ export default class ChatList extends Component {
                                     type="button"
                                     className="btn btn-success"
                                     onClick={() => {
-                                        this.props.history.push(`/animals/${this.props.animal.id}/edit`);
+                                        this.props.history.push(`/messages/${this.props.message.id}/edit`);
                                     }}
                                 >Edit
                                 </button>

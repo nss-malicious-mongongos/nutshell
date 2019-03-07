@@ -1,18 +1,17 @@
 import React, { Component } from "react"
 import { Route } from "react-router-dom"
-import Dashboard from "./Dashboard"
-import ChatManager from "../modules/ChatManager"
-import ChatForm from "../components/chat/ChatForm"
 import ChatEditForm from "../components/chat/ChatEditForm"
-import TaskManager from "../modules/TaskManager";
-import TaskForm from "./task/TaskForm"
+import ChatForm from "../components/chat/ChatForm"
+import ChatManager from "../modules/ChatManager"
+import Dashboard from "./Dashboard"
 import TaskEditForm from "./task/TaskEditForm"
-
+import TaskForm from "./task/TaskForm"
+import TaskManager from "../modules/TaskManager";
 
 class ApplicationViews extends Component {
   state = {
-    tasks: [],
     messages: [],
+    tasks: [],
     users: []
   }
 
@@ -29,6 +28,16 @@ class ApplicationViews extends Component {
     ChatManager.delete(id)
       .then(ChatManager.getAll)
       .then(messages => this.setState({ messages: messages }))
+
+  updateMessage = editedMessage => {
+    return ChatManager.put(editedMessage)
+      .then(() => ChatManager.getAll())
+      .then(messages =>
+        this.setState({
+          messages: messages
+        })
+      )
+  }
 
   addTask = task => {
     return TaskManager.addTask(task)
