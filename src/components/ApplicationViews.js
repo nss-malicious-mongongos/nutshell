@@ -11,6 +11,7 @@ import TaskEditForm from "./task/TaskEditForm";
 import UserManager from "../modules/UserManager";
 
 import FriendManager from "../modules/FriendManager";
+import NewFriend from "./friends/NewFriend";
 
 
 class ApplicationViews extends Component {
@@ -138,17 +139,19 @@ class ApplicationViews extends Component {
         />
       }}
       />
-      <Route exact path="/tasks/new" render={(props) => {
-        return <TaskForm {...props} addTask={this.addTask} />
-      }} />
-      <Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
-        return <TaskEditForm {...props} updateTask={this.updateTask} />
-      }} />
 
+      	<Route exact path="/tasks/new" render={(props) => {
+        	return <TaskForm {...props} addTask={this.addTask} />
+      	}} />
+    	<Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
+        	return <TaskEditForm {...props} updateTask={this.updateTask} />
+      	}} />
 
+		<Route exact path="/friends/new" render={(props) => {
+			return <NewFriend {...props} users={this.state.users} friends={this.state.friends} />
+	  	}} />
     </React.Fragment>
-  }
-
+  	}
 }
 
 export default ApplicationViews;
