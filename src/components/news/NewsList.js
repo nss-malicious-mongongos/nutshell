@@ -8,11 +8,12 @@ export default class ArticleList extends Component {
     render() {
         const userId = parseInt(sessionStorage.getItem("credentials"))
 
-        const friendarray = this.props.friends.map(friend => this.props.articles.filter(
-            o => o.userId === friend.otherPersonId)) || []
+        const friendarray = this.props.friends.flatMap(friend =>
+            this.props.articles.filter(
+                o => o.userId === friend.otherPersonId)) || []
 
         console.log(friendarray)
-        const friendArticleArray = friendarray[0] || []
+        const friendArticleArray = friendarray || []
 
 
         return (
@@ -53,46 +54,36 @@ export default class ArticleList extends Component {
 
                 }
                 <h1>My Friends News Articles</h1>
-                <div className="friendArticles article-card card shadow bg-light">
 
 
 
 
 
-                    {
-                        friendArticleArray.map(article =>
 
-                            <div>
+                {
+                    friendArticleArray.map(article =>
+
+                        <section className="articleContainer ">
+                            <div className="friendArticles article-card card shadow bg-light">
                                 <h3>{article.title}</h3>
                                 <p>{article.synopsis}</p>
                                 <a href={article.url}>{article.url}</a>
-                                {
-                                    this.props.friends.map(friend =>
-                                        <div id={friend.id} className="card p-1">
-                                            {
-                                                this.props.users
-                                                    .filter(user => user.id === friend.otherPersonId)
-                                                    .map(u =>
-                                                        <h5>
-                                                            User Name: {u.username}
-                                                        </h5>
-                                                    )
-                                            }
-                                        </div>
-                                    )
-                                }
+                                <h4>User Name: {article.user.username}</h4>
+
 
 
 
                             </div>
-                        )
+                        </section>
+                    )
 
-                    }
+                }
 
 
-                </div>
 
-            </div>
+
+
+            </div >
         )
 
     }
