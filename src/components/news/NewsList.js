@@ -7,7 +7,6 @@ export default class ArticleList extends Component {
 
     render() {
         const userId = parseInt(sessionStorage.getItem("credentials"))
-        console.log(userId)
         return (
             <div>
                 <h1 className="ArticleHeader ">My Articles </h1>
@@ -20,7 +19,7 @@ export default class ArticleList extends Component {
                     Add News Article
            </button>
                 {
-                    this.props.articles.filter(article => article.userId === userId)
+                    this.props.articles.filter(article => article.userId === userId|article.userId === this.props.friends[2].otherPersonId)
                         .map(article =>
                             <section className="articleContainer ">
                                 <div key={article.id} className="article-card card shadow bg-light" >

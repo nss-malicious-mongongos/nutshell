@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
-import clap from "./movie.png"
 import "./movie.css"
 
 class MovieDashCard extends Component {
