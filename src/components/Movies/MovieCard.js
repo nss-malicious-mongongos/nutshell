@@ -13,7 +13,7 @@ class MovieCard extends Component {
         console.log(`render -- Movie ${this.props.movies.id}`)
 
         return (
-            <React.Fragment>
+            <div>
                 <div key={this.props.movies.id} className="card">
                     <div className="card-body">
                         <h5 className="card-title">
@@ -44,7 +44,7 @@ class MovieCard extends Component {
                     </div>
                 </div>
 
-            </React.Fragment>
+            </div>
         )
     }
 }

@@ -13,12 +13,15 @@ export default class Dashboard extends Component {
                     createMessage={this.props.createMessage}
                     deleteMessage={this.props.deleteMessage}
                     updateMessage={this.props.updateMessage}
-                    {...this.props}
                     history={history}
                 />
                 <MovieList {...this.props} />
                 <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
                 <ArticleList {...this.props} />
+                <ArticleList {...this.props} friends={this.props.friends} />
+                <MovieList {...this.props} />
+                <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
+
             </React.Fragment>
         )
     }
