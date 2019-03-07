@@ -8,19 +8,11 @@ export default class ArticleList extends Component {
     render() {
         const userId = parseInt(sessionStorage.getItem("credentials"))
 
+        const friendarray = this.props.friends.map(friend => this.props.articles.filter(
+            o => o.userId === friend.otherpersonId)) || []
 
-
-
-        const friendArticles = this.props.friends.filter(friend=> friend.userId === userId)
-        const something = friendArticles.map(friend => this.props.articles.filter(
-            o => o.userId === friend.otherpersonId
-        )
-        )
-
-console.log(something)
-
-
-
+        console.log(friendarray)
+        const friendArticleArray = friendarray[0] || []
 
 
         return (
@@ -60,17 +52,45 @@ console.log(something)
                         )
 
                 }
-                            <h1>My Friends News Articles</h1>
-                            <div  className="friendArticles article-card card shadow bg-light">
+                <h1>My Friends News Articles</h1>
+                <div className="friendArticles article-card card shadow bg-light">
 
-                                { something.map(el =>
 
-                                    <div> {el.title}</div>
-                                )
 
+
+
+                    {
+                        friendArticleArray.map(article =>
+
+                            <div>
+                                <h3>{article.title}</h3>
+                                <p>{article.synopsis}</p>
+                                <a href={article.url}>{article.url}</a>
+                                {
+                                    this.props.friends.map(friend =>
+                                        <div id={friend.id} className="card p-1">
+                                            {
+                                                this.props.users
+                                                    .filter(user => user.id === friend.otherpersonId)
+                                                    .map(u =>
+                                                        <h5>
+                                                            User Name: {u.username}
+                                                        </h5>
+                                                    )
+                                            }
+                                        </div>
+                                    )
                                 }
 
+
+
                             </div>
+                        )
+
+                    }
+
+
+                </div>
 
             </div>
         )
