@@ -1,10 +1,12 @@
-import React, {Component} from "react"
+import React, {Component} from "react";
+import TaskList from "./task/TaskList";
 
 export default class Dashboard extends Component {
     render() {
+        const history = this.props.history;
         return (
             //put your components here
-            "Hello world!" //delete this, I just put it here so it wouldn't throw an error
+            <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
         )
     }
 }
