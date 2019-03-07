@@ -10,7 +10,7 @@ export default class Dashboard extends Component {
             //put your components here
             <React.Fragment>
                 <FriendList friends={this.props.friends} users={this.props.users} history={history} />
-                <ArticleList {...this.props} />
+                <ArticleList {...this.props} friends={this.props.friends} />
 
             <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
 

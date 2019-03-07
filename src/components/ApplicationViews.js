@@ -99,8 +99,7 @@ class ApplicationViews extends Component {
 
   	render() {
 	  
-	console.log("State is:", this.state)
-    console.log(this.props.activeUser)
+	
     return <React.Fragment>
 
 
