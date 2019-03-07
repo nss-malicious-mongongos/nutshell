@@ -51,17 +51,16 @@ export default class EventEditForm extends Component {
                         <div className="form-group" >
                             <label htmlFor="name">Name</label>
                             <input type="text"
-                                required
                                 id="eventName"
                                 onChange={this.handleFieldChange}
-                                placeholder="Name" />
+                                value={this.state.eventName} />
                         </div>
                         <div className="form-group" >
                             <label htmlFor="date">Date</label>
                             <input type="date"
-                                required
                                 id="eventDate"
                                 onChange={this.handleFieldChange}
+                                value={this.state.eventDate}
                             />
                         </div>
                         <div className="form-group" >
@@ -70,7 +69,7 @@ export default class EventEditForm extends Component {
                                 required
                                 id="eventLocation"
                                 onChange={this.handleFieldChange}
-                                placeholder="Location" />
+                                value={this.state.eventLocation} />
                         </div>
                     </div>
                     <button type="submit"
