@@ -3,10 +3,24 @@
     text-align: center;
 }
 
-.eventsContainer {
+.futureEvents {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pastEvents {
+    display: flex;
+}
+
+.pastEvents  .event-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: gray;
+    background-color: lightgray;
 }
 
 .event-card {
@@ -18,7 +32,7 @@
     margin: 8px;
 }
 
-.event-card:first-of-type {
+.futureEvents .event-card:first-of-type {
     font-weight: bolder;
     background-color: palegoldenrod;
 }

@@ -5,7 +5,8 @@ import EventManager from "../modules/EventManager";
 import EventForm from "./event/EventForm";
 class ApplicationViews extends Component {
   state = {
-    events: []
+    events: [],
+    showPastEvents: false
   }
 
   refreshEvents = () => {
@@ -17,8 +18,16 @@ class ApplicationViews extends Component {
       })
   }
 
-  addEvent = () => {
+  addEvent = (event) => {
+    EventManager.addEvent(event)
+    .then(() => EventManager.getAll())
+    .then(events => this.setState({events: events}))
+  }
 
+  showPastEventsToggle = () => {
+    const show = {};
+    (this.state.showPastEvents === false) ? (show.showPastEvents = true) : (show.showPastEvents = false)
+    this.setState(show)
   }
 
   deleteEvent = (id) => {
@@ -35,13 +44,15 @@ class ApplicationViews extends Component {
     return <React.Fragment>
       <Route exact path="/" render={props => {
         return <Dashboard {...props}
+        showPastEvents={this.state.showPastEvents}
+        showPastEventsToggle={this.showPastEventsToggle}
         events={this.state.events}
         deleteEvent={this.deleteEvent}
         />
       }}
       />
       <Route path="/newEvent" render={props => {
-        return <EventForm addEvent={this.addEvent} />
+        return <EventForm {...props} addEvent={this.addEvent} />
       }}/>
     </React.Fragment>
   }
