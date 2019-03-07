@@ -1,7 +1,27 @@
-.event-card{
+body {
+    background-image: "https://www.alliontechnologies.com/wp-content/uploads/2018/01/internet-technology-concept-on-computer-display-with-animated-dots-and-lines-of-molecule-or-nuclear-on-blue-background-4k-video_rrysauxj_thumbnail-full01.jpg"
+
+}
+
+
+
+.article-card{
     display: flex;
-width: 50px;
+    flex-direction: column;
+
+width: 400px;
 
     flex-basis: 22%;
 
 }
+.articleContainer {
+    padding-bottom: 50px;
+
+}
+
+.ArticleHeader{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
