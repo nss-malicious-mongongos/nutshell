@@ -5,6 +5,11 @@ import ChatEditForm from "../components/chat/ChatEditForm"
 import ChatForm from "../components/chat/ChatForm"
 import ChatManager from "../modules/ChatManager"
 import Dashboard from "./Dashboard"
+import MovieManager from "../modules/MovieManager"
+import MovieForm from "./Movies/MovieForm"
+import MovieList from "./Movies/MovieList"
+import MovieFullList from "./Movies/MovieFullList"
+import MovieEditForm from "./Movies/MovieEditForm";
 import NewArticleForm from "./news/NewArticleForm";
 import EditArticleForm from "./news/EditArticleForm";
 import TaskEditForm from "./task/TaskEditForm"
@@ -16,7 +21,8 @@ class ApplicationViews extends Component {
     messages: [],
     tasks: [],
     articles: [],
-    users: []
+    users: [],
+    movies: []
   }
 
   createMessage = message => {
@@ -67,6 +73,24 @@ class ApplicationViews extends Component {
 
   }
 
+  updateMovie = editedMovie => {
+    return MovieManager.updateMovie(editedMovie)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
+
+  deleteMovie = id => {
+    return MovieManager.deleteMovie(id)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
+
+  addMovie = movie => {
+    return MovieManager.addMovie(movie)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
+
   addTask = task => {
     return TaskManager.addTask(task)
       .then(() => TaskManager.getUserQuery())
@@ -99,17 +123,21 @@ class ApplicationViews extends Component {
   componentDidMount() {
     const newState = {}
 
-    TaskManager.getUserQuery()
-      .then(tasks => newState.tasks = tasks)
-      .then(() => this.setState(newState))
+    ArticleManager.getAll()
+      .then(articles => newState.articles = articles)
 
     ChatManager.getAll()
       .then(messages => newState.messages = messages)
       .then(() => this.setState(newState))
-
-    ArticleManager.getAll()
-      .then(articles => newState.articles = articles)
       .then(() => this.setState(newState))
+
+    MovieManager.getAll()
+      .then(movies => newState.movies = movies)
+
+    TaskManager.getUserQuery()
+      .then(tasks => newState.tasks = tasks)
+      .then(() => this.setState(newState))
+
   }
 
   render() {
@@ -125,9 +153,26 @@ class ApplicationViews extends Component {
           editArticle={this.EditArticle}
           messages={this.state.messages}
           deleteMessage={this.deleteMessage}
+          movies={this.state.movies}
+          deleteMovie={this.deleteMovie}
           tasks={this.state.tasks}
           updateTask={this.updateTask}
           deleteTask={this.deleteTask}
+        />
+      }}
+      />
+
+      <Route exact path="/Movies" render={props => {
+        return <MovieFullList {...props}
+          movies={this.state.movies}
+          deleteMovie={this.deleteMovie}
+        />
+      }}
+      />
+      <Route path="/Movies/:movieId(\d+)/edit" render={props => {
+        return <MovieEditForm {...props}
+          movies={this.state.movies}
+          updateMovie={this.updateMovie}
         />
       }}
       />
@@ -140,6 +185,12 @@ class ApplicationViews extends Component {
       }}
       />
 
+      <Route exact path="/Movies/New" render={props => {
+        return <MovieForm {...props}
+          addMovie={this.addMovie}
+        />
+      }}
+      />
       <Route path="/articles/:articleId(\d+)/edit" render={props => {
         return <EditArticleForm {...props}
           editArticle={this.EditArticle}
@@ -161,13 +212,23 @@ class ApplicationViews extends Component {
       }}
       />
       <Route exact path="/tasks/new" render={(props) => {
+        return <TaskForm {...props}
+          addTask={this.addTask} />
+      }} />
+
+      <Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
+        return <TaskEditForm {...props}
+          updateTask={this.updateTask} />
+      }} />
+
+      <Route exact path="/tasks/new" render={(props) => {
         return <TaskForm {...props} addTask={this.addTask} />
       }} />
+
       <Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
         return <TaskEditForm {...props} updateTask={this.updateTask} />
       }} />
-
-    </React.Fragment>
+    </React.Fragment >
   }
 }
 export default ApplicationViews
