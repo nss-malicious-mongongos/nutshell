@@ -21,5 +21,14 @@ export default {
       },
       body: JSON.stringify(obj)
     }).then(data => data.json())
+  },
+  updateEvent(obj) {
+    return fetch(`${Settings.remoteURL}/events/${obj.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(obj)
+    }).then(r => r.json())
   }
 }

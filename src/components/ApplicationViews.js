@@ -9,12 +9,12 @@ import { Route } from "react-router-dom"
 import TaskManager from "../modules/TaskManager";
 import TaskEditForm from "./task/TaskEditForm"
 import TaskForm from "./task/TaskForm"
+import EventEditForm from "./event/EventEditForm";
 
 export default class ApplicationViews extends Component {
   state = {
     articles: [],
     events: [],
-    showPastEvents: false,
     tasks: []
   }
 
@@ -87,15 +87,14 @@ export default class ApplicationViews extends Component {
       .then(events => this.setState({ events: events }))
   }
 
-  showPastEventsToggle = () => {
-    const show = {};
-    (this.state.showPastEvents === false) ? (show.showPastEvents = true) : (show.showPastEvents = false)
-    this.setState(show)
-  }
-
   deleteEvent = (id) => {
     EventManager.delete(id)
       .then(() => EventManager.getAll())
+      .then(() => this.refreshEvents())
+  }
+
+  updateEvent = obj => {
+    return EventManager.updateEvent(obj)
       .then(() => this.refreshEvents())
   }
 
@@ -120,8 +119,6 @@ export default class ApplicationViews extends Component {
           deleteArticle={this.deleteArticle}
           addNewArticle={this.addNewArticle}
           editArticle={this.EditArticle}
-          showPastEvents={this.state.showPastEvents}
-          showPastEventsToggle={this.showPastEventsToggle}
           events={this.state.events}
           deleteEvent={this.deleteEvent}
           tasks={this.state.tasks}
@@ -130,6 +127,9 @@ export default class ApplicationViews extends Component {
         />
       }}
       />
+      <Route path="/events/:eventId(\d+)/edit" render={(props) => {
+        return <EventEditForm {...props} events={this.state.events} updateEvent={this.updateEvent} />
+      }} />
       <Route exact path="/tasks/new" render={(props) => {
         return <TaskForm {...props} addTask={this.addTask} />
       }} />
@@ -143,12 +143,9 @@ export default class ApplicationViews extends Component {
         return <NewArticleForm {...props}
           articles={this.state.articles}
           addNewArticle={this.addNewArticle}
-
-
         />
       }}
       />
-
       <Route path="/articles/:articleId(\d+)/edit" render={props => {
         return <EditArticleForm {...props}
           editArticle={this.EditArticle}

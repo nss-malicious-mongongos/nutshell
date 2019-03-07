@@ -11,7 +11,7 @@ export default class EventCard extends Component {
                 </div>
                     <div className="event-location">{this.props.event.location}</div>
                     <div className="event-card-btns">
-                        <a href="#" className="event-card-btn">Edit</a>
+                        <a href="#" className="event-card-btn" onClick={()=> this.props.history.push(`/events/${this.props.event.id}/edit`)}>Edit</a>
                         <a href="#" className="event-card-btn" onClick={() => this.props.deleteEvent(this.props.event.id)}>Delete</a>
                     </div>
             </section>

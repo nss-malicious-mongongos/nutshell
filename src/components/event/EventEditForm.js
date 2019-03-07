@@ -1,12 +1,12 @@
 import React, { Component } from "react"
-import "./Event.css"
+import EventManager from "../../modules/EventManager"
 
-export default class EventForm extends Component {
+export default class EventEditForm extends Component {
 
     state = {
         eventName: "",
-        eventLocation: "",
         eventDate: "",
+        eventLocation: ""
     }
 
     handleFieldChange = evt => {
@@ -15,20 +15,32 @@ export default class EventForm extends Component {
         this.setState(stateToChange)
     }
 
-    constructNewEvent = evt => {
+    updateExistingEvent = evt => {
         evt.preventDefault();
         if (this.state.eventName === "" || this.state.eventLocation === "" || this.state.eventDate === "") {
             window.alert("All fields are required")
         } else {
-            const newEvent = {
+            const editedEvent = {
                 userId: parseInt(sessionStorage.getItem("credentials")),
                 name: this.state.eventName,
                 date: this.state.eventDate,
-                location: this.state.eventLocation
+                location: this.state.eventLocation,
+                id: this.props.match.params.eventId
             }
-            this.props.addEvent(newEvent)
+            this.props.updateEvent(editedEvent)
             this.props.history.push("/")
         }
+    }
+
+    componentDidMount() {
+        EventManager.get(this.props.match.params.eventId)
+            .then(event => {
+                this.setState({
+                    eventName: event.name,
+                    eventDate: event.date,
+                    eventLocation: event.location
+                })
+            })
     }
 
     render() {
@@ -63,9 +75,9 @@ export default class EventForm extends Component {
                     </div>
                     <button type="submit"
                         className="btn btn-success create-event-btn"
-                        onClick={this.constructNewEvent}
+                        onClick={this.updateExistingEvent}
                     >
-                        Submit
+                        Update
                     </button>
                 </form>
             </React.Fragment>
