@@ -9,7 +9,7 @@ export default class ArticleList extends Component {
         const userId = parseInt(sessionStorage.getItem("credentials"))
 
         const friendarray = this.props.friends.map(friend => this.props.articles.filter(
-            o => o.userId === friend.otherpersonId)) || []
+            o => o.userId === friend.otherPersonId)) || []
 
         console.log(friendarray)
         const friendArticleArray = friendarray[0] || []
@@ -71,7 +71,7 @@ export default class ArticleList extends Component {
                                         <div id={friend.id} className="card p-1">
                                             {
                                                 this.props.users
-                                                    .filter(user => user.id === friend.otherpersonId)
+                                                    .filter(user => user.id === friend.otherPersonId)
                                                     .map(u =>
                                                         <h5>
                                                             User Name: {u.username}

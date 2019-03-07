@@ -13,7 +13,7 @@ export default class FriendList extends Component {
                                 <div className="card-header">{friend.user.username}</div>
                                 {
                                     this.props.users
-                                        .filter(user => user.id === friend.otherpersonId)
+                                        .filter(user => user.id === friend.otherPersonId)
                                         .map(u =>
                                             <div>
                                                 is friends with {u.username}
