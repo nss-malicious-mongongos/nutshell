@@ -67,6 +67,16 @@ class ApplicationViews extends Component {
 		)
 		
 	}
+
+	addFriend = friend => {
+    	return FriendManager.addFriend(friend)
+			.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      		.then(friends =>
+        		this.setState({
+					friends: friends
+        		})
+			)
+	}
 	
 	addTask = task => {
     	return TaskManager.addTask(task)
@@ -76,8 +86,7 @@ class ApplicationViews extends Component {
 					tasks: tasks
         		})
 			)
-		  }
-		  
+	}
 	updateTask = editedTask => {
 		return TaskManager.edit(editedTask)
       		.then(() => TaskManager.getUserQuery())
@@ -86,8 +95,7 @@ class ApplicationViews extends Component {
 					tasks: tasks
         		})
 			)
-		}
-
+	}
 	deleteTask = id => {
 		return TaskManager.delete(id)
 			.then(() => TaskManager.getUserQuery())
@@ -148,7 +156,7 @@ class ApplicationViews extends Component {
       	}} />
 
 		<Route exact path="/friends/new" render={(props) => {
-			return <NewFriend {...props} users={this.state.users} friends={this.state.friends} />
+			return <NewFriend {...props} users={this.state.users} friends={this.state.friends} addFriend={this.addFriend} />
 	  	}} />
     </React.Fragment>
   	}

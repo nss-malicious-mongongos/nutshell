@@ -15,18 +15,20 @@ export default class NewFriend extends Component {
     createNewFriend = event => {
         event.preventDefault();
 
-        const friendId = this.props.users.filter(user => user.username === this.state.friendName).id
-        console.log(friendId)
+        const friendArray = this.props.users.filter(user => user.username === this.state.friendName)
+        if (friendArray.length === 0) {
+            window.alert("No such user found!")
+        } else {
+            const friendId = friendArray[0].id
 
-        const friend = {
-            userId: parseInt(sessionStorage.getItem("credentials")),
-            friendId: friendId
-        };
-        
-        console.log(friend)
-
-//        this.props.addFriend(friend)
-  //          .then(() => this.props.history.push("/"));
+            const friend = {
+                userId: parseInt(sessionStorage.getItem("credentials")),
+                friendId: friendId
+            };
+    
+        this.props.addFriend(friend)
+            .then(() => this.props.history.push("/"));
+        }
     };
 
     render() {
