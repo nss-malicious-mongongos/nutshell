@@ -1,9 +1,19 @@
 #dashboard {
-    max-height: 550px;
+    height: 90%;
+    display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     align-items: flex-start;
+    margin: auto;
+    width: 100%;
+    padding-bottom: 20px;
 }
+
 #tasks-module, #articles-module, #friends-module, #chats-module, #movies-module {
     flex-basis: 32%;
-    max-height: 270px;
+    min-height: 245px; 
+    margin: 2px;
+    border-radius: 10px;
+    border: 1px solid grey;
+    word-wrap: break-word;
 }
