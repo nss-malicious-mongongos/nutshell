@@ -12,8 +12,9 @@ class MovieList extends Component {
         console.log(userId)
         console.log("render -- MovieList")
         return (
-            <div>
+            <div id="movies-module" className="overflow-auto">
             <div className="centerChildren">
+            <h3>My Favorite Movies</h3>
             <button type="button"
                         className="btn btn-success"
                         onClick={() => {

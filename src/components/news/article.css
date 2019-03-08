@@ -5,23 +5,25 @@ body {
 
 
 
-.article-card{
+.article-card {
     display: flex;
     flex-direction: column;
-
-width: 400px;
-
+    width: 400px;
     flex-basis: 22%;
-
+    padding: 10px;
 }
 .articleContainer {
     padding-bottom: 50px;
-
 }
 
 .ArticleHeader{
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
 }
 
+.all-articles {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

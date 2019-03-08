@@ -32,7 +32,8 @@ export default class ChatList extends Component {
 
     render() {
         return (
-            <article className="chat">
+            <article className="chat overflow-auto" id="chats-module">
+            <h3>Chat</h3>
                 <form className="messageForm">
                     <div className="form-group">
                         <label htmlFor="text"></label>

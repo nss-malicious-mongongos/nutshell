@@ -8,8 +8,8 @@ export default class EventList extends Component {
     render() {
 
         return (
-            <React.Fragment>
-                <h2 className="events-header">Upcoming Events</h2>
+            <div className="overflow-auto" id="events-module">
+                <h3 className="events-header">Upcoming Events</h3>
                 <div className="new-event-btn">
                     <button type="button"
                         className="btn btn-success"
@@ -28,7 +28,7 @@ export default class EventList extends Component {
                     </section>
 
                 </div>
-            </React.Fragment>
+            </div>
         )
     }
 }
