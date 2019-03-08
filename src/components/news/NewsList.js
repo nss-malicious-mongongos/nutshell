@@ -17,6 +17,7 @@ export default class ArticleList extends Component {
 
 
         return (
+            <React.Fragment>
             <div className="overflow-auto" id="articles-module">
                 <h1 className="ArticleHeader ">My Articles </h1>
                 <button type="button"
@@ -53,6 +54,8 @@ export default class ArticleList extends Component {
                         )
 
                 }
+                </div>
+                <div className="overflow-auto" id="articles-friend-module">
                 <h1>My Friends News Articles</h1>
 
 
@@ -84,6 +87,7 @@ export default class ArticleList extends Component {
 
 
             </div >
+            </React.Fragment>
         )
 
     }

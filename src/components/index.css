@@ -9,8 +9,12 @@
     padding-bottom: 20px;
 }
 
-#tasks-module, #friends-module, #chats-module, #movies-module, #events-module, #articles-module {
+#tasks-module, #friends-module, #chats-module, #movies-module, #events-module, #articles-module, #articles-friend-module {
     flex-basis: 33%;
     min-height: 245px; 
     margin: 2px;
+}
+
+#chats-module {
+    max-height: 450px;
 }
