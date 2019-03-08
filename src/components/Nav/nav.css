@@ -1,3 +1,5 @@
 .navbar {
     background-color: #ffffff;
+    z-index: 9;
+    opacity: 1;
 }
