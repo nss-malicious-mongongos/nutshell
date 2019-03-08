@@ -1,0 +1,52 @@
+.events-header,
+.new-event-btn {
+    text-align: center;
+}
+
+.futureEvents {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pastEvents {
+    display: flex;
+}
+
+.pastEvents  .event-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: gray;
+    background-color: lightgray;
+}
+
+.event-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 28%;
+    padding: 10px;
+    margin: 8px;
+}
+
+.futureEvents .event-card:first-of-type {
+    font-weight: bolder;
+    background-color: palegoldenrod;
+}
+
+.event-title-container {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.event-card-btns {
+    justify-self: flex-start;
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+}
