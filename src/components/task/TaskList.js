@@ -35,7 +35,7 @@ export default class TaskList extends Component {
     render() {
         return (
             <div className="overflow-auto" id="tasks-module">
-                <h2>Task List</h2>
+                <h3>Task List</h3>
                 <div className="taskButton text-center">
                     <button type="button" className="btn btn-success" onClick={() => {this.props.history.push("/tasks/new")}}>Add New Task</button>
                 </div>

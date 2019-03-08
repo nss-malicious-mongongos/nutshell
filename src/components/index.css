@@ -1,20 +1,24 @@
 #dashboard {
     height: 90%;
-    display: flex;
+    /* display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: flex-start; */
     margin: auto;
     width: 100%;
     padding-bottom: 20px;
 }
 
 #tasks-module, #friends-module, #chats-module, #movies-module, #events-module, #articles-module, #articles-friend-module {
-    flex-basis: 33%;
+    /* flex-basis: 33%; */
     min-height: 245px; 
     margin: 2px;
 }
 
 #chats-module {
     max-height: 450px;
+}
+
+h3 {
+    text-align: center;
 }

@@ -5,14 +5,11 @@ body {
 
 
 
-.article-card{
+.article-card {
     display: flex;
     flex-direction: column;
-
-width: 400px;
-
+    width: 400px;
     flex-basis: 22%;
-
 }
 .articleContainer {
     padding-bottom: 50px;
@@ -21,7 +18,7 @@ width: 400px;
 
 .ArticleHeader{
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
 }
 

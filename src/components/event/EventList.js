@@ -9,7 +9,7 @@ export default class EventList extends Component {
 
         return (
             <div className="overflow-auto" id="events-module">
-                <h2 className="events-header">Upcoming Events</h2>
+                <h3 className="events-header">Upcoming Events</h3>
                 <div className="new-event-btn">
                     <button type="button"
                         className="btn btn-success"

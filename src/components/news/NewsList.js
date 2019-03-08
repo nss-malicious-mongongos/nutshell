@@ -19,7 +19,7 @@ export default class ArticleList extends Component {
         return (
             <React.Fragment>
             <div className="overflow-auto" id="articles-module">
-                <h1 className="ArticleHeader ">My Articles </h1>
+                <h3 className="ArticleHeader ">My Articles </h3>
                 <button type="button"
                     className="btn btn-dark"
                     onClick={() => {
@@ -56,7 +56,7 @@ export default class ArticleList extends Component {
                 }
                 </div>
                 <div className="overflow-auto" id="articles-friend-module">
-                <h1>My Friends News Articles</h1>
+                <h3>My Friends News Articles</h3>
 
 
 

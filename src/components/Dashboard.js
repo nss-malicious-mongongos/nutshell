@@ -12,7 +12,8 @@ export default class Dashboard extends Component {
     render() {
         const history = this.props.history;
         return (
-            <div className="d-flex flex-wrap h-100" id="dashboard">
+            // <div className="d-flex flex-wrap h-100" id="dashboard">
+            <div id="dashboard" className="text-*-center">
                 <ChatList messages={this.props.messages}
                     createMessage={this.props.createMessage}
                     deleteMessage={this.props.deleteMessage}
