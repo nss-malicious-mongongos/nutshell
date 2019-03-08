@@ -10,7 +10,6 @@ import EditArticleForm from "./news/EditArticleForm";
 import EventEditForm from "./event/EventEditForm";
 import EventForm from "./event/EventForm";
 import EventManager from "../modules/EventManager";
-import FriendManager from "../modules/FriendManager";
 import MovieEditForm from "./Movies/MovieEditForm";
 import MovieForm from "./Movies/MovieForm"
 import MovieFullList from "./Movies/MovieFullList"

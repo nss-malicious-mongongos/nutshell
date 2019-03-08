@@ -4,7 +4,6 @@ import ArticleList from "./news/NewsList"
 import MovieList from "./Movies/MovieList"
 import TaskList from "./task/TaskList"
 import FriendList from "./friends/FriendList";
-import ArticleList from "./news/NewsList";
 import EventList from "./event/EventList"
 
 export default class Dashboard extends Component {
