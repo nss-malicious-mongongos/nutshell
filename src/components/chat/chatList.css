@@ -1,0 +1,16 @@
+.text {font-size: 20px;
+        }
+.timestamp {
+    font-size: 10px;
+}
+.userName {
+font-size: 10px;
+}
+
+.form-control {
+    max-width: 40%
+}
+
+.chat-output {
+    max-height: 1000px;
+}

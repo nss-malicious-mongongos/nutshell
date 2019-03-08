@@ -1,8 +1,11 @@
 import React, { Component } from "react"
 import { Route } from "react-router-dom"
-import Dashboard from "./Dashboard"
 import ArticleManager from "../modules/ArticleManager";
-import NewArticleForm from "./news/NewArticleForm";
+import ChatEditForm from "../components/chat/ChatEditForm"
+// import ChatForm from "../components/chat/ChatForm"
+import ChatList from "../components/chat/ChatList"
+import ChatManager from "../modules/ChatManager"
+import Dashboard from "./Dashboard"
 import EditArticleForm from "./news/EditArticleForm";
 import EventEditForm from "./event/EventEditForm";
 import EventForm from "./event/EventForm";
@@ -11,23 +14,56 @@ import MovieEditForm from "./Movies/MovieEditForm";
 import MovieForm from "./Movies/MovieForm"
 import MovieFullList from "./Movies/MovieFullList"
 import MovieManager from "../modules/MovieManager"
+import NewArticleForm from "./news/NewArticleForm";
 import TaskEditForm from "./task/TaskEditForm"
 import TaskForm from "./task/TaskForm"
 import TaskManager from "../modules/TaskManager";
 import UserManager from "../modules/UserManager";
-
 import FriendManager from "../modules/FriendManager";
 import NewFriend from "./friends/NewFriend";
 
 export default class ApplicationViews extends Component {
   state = {
-	articles: [],
-	events: [],
-	friends: [],
-	movies: [],
-	tasks: [],
-	users: []
+    articles: [],
+    events: [],
+    friends: [],
+    messages: [],
+    movies: [],
+    tasks: [],
+    users: [],
   }
+
+  createMessage = message => {
+    return ChatManager.post(message)
+      .then(() => ChatManager.getAll())
+      .then(messages =>
+        this.setState({
+          messages: messages
+        })
+      )
+  }
+  deleteMessage = (id) =>
+    ChatManager.delete(id)
+      .then(ChatManager.getAll)
+      .then(messages => this.setState({ messages: messages }))
+
+  updateMessage = editedMessage => {
+    return ChatManager.put(editedMessage)
+      .then(() => ChatManager.getAll())
+      .then(messages =>
+        this.setState({
+          messages: messages
+        })
+      )
+  }
+
+  EditArticle = (editedArticleObject) => {
+    return ArticleManager.EditArticle(editedArticleObject)
+      .then(() => ArticleManager.getAll())
+      .then(articles => this.setState({ articles: articles })
+      )
+  };
+
 
   addEvent = (event) => {
     EventManager.addEvent(event)
@@ -51,54 +87,76 @@ export default class ApplicationViews extends Component {
       )
   }
 
-  addFriend = friend => {
-	return FriendManager.addFriend(friend)
-		.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
-		  .then(friends =>
-			this.setState({
-				friends: friends
-			})
-		)
-}
+  updateMovie = editedMovie => {
+    return MovieManager.updateMovie(editedMovie)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
 
-addTask = task => {
-	return TaskManager.addTask(task)
-	.then(() => TaskManager.getUserQuery())
-	.then(tasks =>
+  deleteEvent = (id) => {
+    EventManager.delete(id)
+      .then(() => EventManager.getAll())
+      .then(() => this.refreshEvents())
+  }
+  addFriend = friend => {
+    return FriendManager.addFriend(friend)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
         this.setState({
-			tasks: tasks
+          friends: friends
         })
-		)
-	}
-	
-	deleteArticle = id => {
-		return ArticleManager.deleteArticle(id)
-		.then(() => ArticleManager.getAll())
-		.then(articles => this.setState({ articles: articles })
-		)
-	}
-	
-	deleteEvent = (id) => {
-		EventManager.delete(id)
-		.then(() => EventManager.getAll())
-		.then(() => this.refreshEvents())
-	}
-	
-	deleteFriend = id => {
-		console.log(id)
-		return FriendManager.delete(id)
-			.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
-			.then(friends =>
-				this.setState({
-					friends: friends
-				})
-			)
-	}
+      )
+  }
+
+  addTask = task => {
+    return TaskManager.addTask(task)
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks =>
+        this.setState({
+          tasks: tasks
+        })
+      )
+  }
+
+  deleteArticle = id => {
+    return ArticleManager.deleteArticle(id)
+      .then(() => ArticleManager.getAll())
+      .then(articles => this.setState({ articles: articles })
+      )
+  }
+
+
+  deleteFriend = id => {
+    console.log(id)
+    return FriendManager.delete(id)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
+        this.setState({
+          friends: friends
+        })
+      )
+  }
 
   deleteMovie = id => {
     return MovieManager.deleteMovie(id)
       .then(() => MovieManager.getAll())
       .then(movies => this.setState({ movies: movies }))
+  }
+
+  addMovie = movie => {
+    return MovieManager.addMovie(movie)
+      .then(() => MovieManager.getAll())
+      .then(movies => this.setState({ movies: movies }))
+  }
+
+  addTask = task => {
+    return TaskManager.addTask(task)
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks =>
+        this.setState({
+          tasks: tasks
+        })
+      )
   }
 
   deleteTask = id => {
@@ -110,13 +168,26 @@ addTask = task => {
         })
       )
   }
+  updateTask = editedTask => {
+    return TaskManager.edit(editedTask)
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks =>
+        this.setState({
+          tasks: tasks
+        })
+      )
+  }
+
+  deleteTask = id => {
+    TaskManager.delete(id)
+  }
 
   EditArticle = (editedArticleObject) => {
     return ArticleManager.EditArticle(editedArticleObject)
       .then(() => ArticleManager.getAll())
       .then(articles => this.setState({ articles: articles })
       )
-  };
+  }
 
   refreshEvents = () => {
     const newState = {}
@@ -132,12 +203,6 @@ addTask = task => {
       .then(() => this.refreshEvents())
   }
 
-  updateMovie = editedMovie => {
-    return MovieManager.updateMovie(editedMovie)
-      .then(() => MovieManager.getAll())
-      .then(movies => this.setState({ movies: movies }))
-  }
-
   updateTask = editedTask => {
     return TaskManager.edit(editedTask)
       .then(() => TaskManager.getUserQuery())
@@ -147,31 +212,71 @@ addTask = task => {
         })
       )
   }
+  addFriend = friend => {
+    return FriendManager.addFriend(friend)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
+        this.setState({
+          friends: friends
+        })
+      )
+  }
+  deleteFriend = id => {
+    console.log(id)
+    return FriendManager.delete(id)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
+        this.setState({
+          friends: friends
+        })
+      )
+  }
 
   componentDidMount() {
     const newState = {};
     this.refreshEvents()
 
-	UserManager.getAll()
-		.then(users => newState.users = users)
-		
-		.then(() => MovieManager.getAll())
-		.then(movies => newState.movies = movies)
-		  
-		.then(() => EventManager.getAll())
-		.then(events => newState.events = events)
+    ArticleManager.getAll()
+      .then(articles => newState.articles = articles)
 
-      	.then(() => ArticleManager.getAll())
-      	.then(articles => newState.articles = articles)
+    ChatManager.getAll()
+      .then(messages => newState.messages = messages)
+
+    MovieManager.getAll()
+      .then(movies => newState.movies = movies)
+
+    UserManager.getAll()
+      .then(users => newState.users = users)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends => newState.friends = friends)
+
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks =>
+        this.setState({
+          tasks: tasks
+        })
+      )
+      .then(() => this.setState(newState))
+    UserManager.getAll()
+      .then(users => newState.users = users)
+
+      .then(() => MovieManager.getAll())
+      .then(movies => newState.movies = movies)
+
+      .then(() => EventManager.getAll())
+      .then(events => newState.events = events)
+
+      .then(() => ArticleManager.getAll())
+      .then(articles => newState.articles = articles)
 
       .then(() => TaskManager.getUserQuery())
       .then(tasks => newState.tasks = tasks)
 
-	  .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
-	  .then(friends => newState.friends = friends)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends => newState.friends = friends)
 
-	  .then(() => this.setState(newState))
-	  .then(() => console.log("state is:", this.state))
+      .then(() => this.setState(newState))
+      .then(() => console.log("state is:", this.state))
   }
 
   render() {
@@ -181,13 +286,16 @@ addTask = task => {
           addNewArticle={this.addNewArticle}
           articles={this.state.articles}
           deleteArticle={this.deleteArticle}
-		  deleteEvent={this.deleteEvent}
-		  deleteFriend={this.deleteFriend}
+          deleteEvent={this.deleteEvent}
+          deleteFriend={this.deleteFriend}
           deleteMovie={this.deleteMovie}
           deleteTask={this.deleteTask}
           editArticle={this.EditArticle}
           events={this.state.events}
-		  friends={this.state.friends}
+          friends={this.state.friends}
+          messages={this.state.messages}
+          createMessage={this.createMessage}
+          deleteMessage={this.deleteMessage}
           movies={this.state.movies}
           tasks={this.state.tasks}
           updateTask={this.updateTask}
@@ -237,6 +345,20 @@ addTask = task => {
         />
       }}
       />
+
+      <Route
+        path="/messages/:messageId(\d+)/edit" render={props => {
+          return <ChatEditForm {...props}
+            messages={this.state.messages}
+            updateMessage={this.updateMessage} />
+        }}
+      />
+      <Route exact path="/messages/new" render={props => {
+        return <ChatList {...props}
+          messages={this.state.messages}
+          createMessage={this.createMessage} />
+      }}
+      />
       <Route path="/articles/:articleId(\d+)/edit" render={props => {
         return <EditArticleForm {...props}
           editArticle={this.EditArticle}
@@ -245,9 +367,24 @@ addTask = task => {
         />
       }}
       />
-<Route exact path="/friends/new" render={(props) => {
-	return <NewFriend {...props} addFriend={this.addFriend} users={this.state.users} />
-}} />
+      <Route exact path="/friends/new" render={(props) => {
+        return <NewFriend {...props} addFriend={this.addFriend} users={this.state.users} />
+      }} />
     </React.Fragment>
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
