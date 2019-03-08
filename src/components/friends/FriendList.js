@@ -10,15 +10,14 @@ export default class FriendList extends Component {
                     {
                         this.props.friends.map(friend => 
                             <div key={friend.id} className="card p-1">
-                                <div className="card-header">{friend.user.username}</div>
                                 {
                                     this.props.users
                                         .filter(user => user.id === friend.otherPersonId)
                                         .map(u => 
-                                            <div key={u.id}>
-                                                is friends with {u.username}&nbsp;
+                                            <React.Fragment>
+                                                {u.username}
                                                 <button type="button" className="btn btn-danger" onClick={() => this.props.deleteFriend(friend.id)}>Delete</button>
-                                            </div>
+                                            </React.Fragment>
                                             )
                                 }
                             </div>

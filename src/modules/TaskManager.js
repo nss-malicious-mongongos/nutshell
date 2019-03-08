@@ -40,7 +40,7 @@ export default {
         return fetch(`${Settings.remoteURL}/tasks${query}`).then(e => e.json())
     },
     getUserQuery() {
-        return fetch(`${Settings.remoteURL}/tasks/?userId=${userId}&completed=false&_expand=user&_sort=completion_date`)
+        return fetch(`${Settings.remoteURL}/tasks/?userId=${userId}&completed=false&_expand=user&_sort=completion_date&_order=ASC`)
         .then(e => e.json())
     }
 }
