@@ -87,13 +87,6 @@ export default class ApplicationViews extends Component {
       )
   }
 
-  deleteArticle = id => {
-    return ArticleManager.deleteArticle(id)
-      .then(articles => this.setState({ articles: articles })
-      )
-
-  }
-
   updateMovie = editedMovie => {
     return MovieManager.updateMovie(editedMovie)
       .then(() => MovieManager.getAll())
@@ -104,6 +97,44 @@ export default class ApplicationViews extends Component {
     EventManager.delete(id)
       .then(() => EventManager.getAll())
       .then(() => this.refreshEvents())
+  }
+  addFriend = friend => {
+    return FriendManager.addFriend(friend)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
+        this.setState({
+          friends: friends
+        })
+      )
+  }
+
+  addTask = task => {
+    return TaskManager.addTask(task)
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks =>
+        this.setState({
+          tasks: tasks
+        })
+      )
+  }
+
+  deleteArticle = id => {
+    return ArticleManager.deleteArticle(id)
+      .then(() => ArticleManager.getAll())
+      .then(articles => this.setState({ articles: articles })
+      )
+  }
+
+
+  deleteFriend = id => {
+    console.log(id)
+    return FriendManager.delete(id)
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends =>
+        this.setState({
+          friends: friends
+        })
+      )
   }
 
   deleteMovie = id => {
@@ -172,12 +203,6 @@ export default class ApplicationViews extends Component {
       .then(() => this.refreshEvents())
   }
 
-  updateMovie = editedMovie => {
-    return MovieManager.updateMovie(editedMovie)
-      .then(() => MovieManager.getAll())
-      .then(movies => this.setState({ movies: movies }))
-  }
-
   updateTask = editedTask => {
     return TaskManager.edit(editedTask)
       .then(() => TaskManager.getUserQuery())
@@ -232,6 +257,26 @@ export default class ApplicationViews extends Component {
         })
       )
       .then(() => this.setState(newState))
+    UserManager.getAll()
+      .then(users => newState.users = users)
+
+      .then(() => MovieManager.getAll())
+      .then(movies => newState.movies = movies)
+
+      .then(() => EventManager.getAll())
+      .then(events => newState.events = events)
+
+      .then(() => ArticleManager.getAll())
+      .then(articles => newState.articles = articles)
+
+      .then(() => TaskManager.getUserQuery())
+      .then(tasks => newState.tasks = tasks)
+
+      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+      .then(friends => newState.friends = friends)
+
+      .then(() => this.setState(newState))
+      .then(() => console.log("state is:", this.state))
   }
 
   render() {
@@ -242,6 +287,7 @@ export default class ApplicationViews extends Component {
           articles={this.state.articles}
           deleteArticle={this.deleteArticle}
           deleteEvent={this.deleteEvent}
+          deleteFriend={this.deleteFriend}
           deleteMovie={this.deleteMovie}
           deleteTask={this.deleteTask}
           editArticle={this.EditArticle}
@@ -321,6 +367,9 @@ export default class ApplicationViews extends Component {
         />
       }}
       />
+      <Route exact path="/friends/new" render={(props) => {
+        return <NewFriend {...props} addFriend={this.addFriend} users={this.state.users} />
+      }} />
     </React.Fragment>
   }
 }

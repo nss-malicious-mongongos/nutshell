@@ -11,19 +11,19 @@ export default class Dashboard extends Component {
         const history = this.props.history;
         return (
             <React.Fragment>
+                <ArticleList {...this.props}
+                    friends={this.props.friends} />
                 <ChatList messages={this.props.messages}
                     createMessage={this.props.createMessage}
                     deleteMessage={this.props.deleteMessage}
                     updateMessage={this.props.updateMessage}
                     history={history}
                 />
-                <MovieList {...this.props} />
-                <ArticleList {...this.props}
-                    friends={this.props.friends} />
-
                 <EventList history={this.props.history}
                     events={this.props.events}
                     deleteEvent={this.props.deleteEvent} />
+                <FriendList friends={this.props.friends} users={this.props.users} history={history} deleteFriend={this.props.deleteFriend} />
+                <MovieList {...this.props} />
                 <TaskList tasks={this.props.tasks} history={history} updateTask={this.props.updateTask} deleteTask={this.props.deleteTask} />
             </React.Fragment >
         )
