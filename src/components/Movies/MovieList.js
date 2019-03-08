@@ -14,6 +14,7 @@ class MovieList extends Component {
         return (
             <div id="movies-module" className="overflow-auto">
             <div className="centerChildren">
+            <h3>My Favorite Movies</h3>
             <button type="button"
                         className="btn btn-success"
                         onClick={() => {

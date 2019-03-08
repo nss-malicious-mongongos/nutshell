@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
+
+import "./nav.css"
 class Nav extends Component {
   logout = () => {
     sessionStorage.clear("credentials")
