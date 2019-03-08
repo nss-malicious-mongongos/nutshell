@@ -160,7 +160,7 @@ addTask = task => {
 		  
 		.then(() => EventManager.getAll())
 		.then(events => newState.events = events)
-		
+
       	.then(() => ArticleManager.getAll())
       	.then(articles => newState.articles = articles)
 
@@ -181,12 +181,13 @@ addTask = task => {
           addNewArticle={this.addNewArticle}
           articles={this.state.articles}
           deleteArticle={this.deleteArticle}
-          deleteEvent={this.deleteEvent}
+		  deleteEvent={this.deleteEvent}
+		  deleteFriend={this.deleteFriend}
           deleteMovie={this.deleteMovie}
           deleteTask={this.deleteTask}
           editArticle={this.EditArticle}
           events={this.state.events}
-          friends={this.state.friends}
+		  friends={this.state.friends}
           movies={this.state.movies}
           tasks={this.state.tasks}
           updateTask={this.updateTask}
