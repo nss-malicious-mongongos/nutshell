@@ -28,7 +28,7 @@ export default class ArticleList extends Component {
                     Add News Article
            </button>
                 {
-                    this.props.articles.filter(article => article.userId === userId|article.userId === this.props.friends[2].otherPersonId)
+                    this.props.articles.filter(article => article.userId === userId)
                         .map(article =>
                             <section className="articleContainer ">
                                 <div key={article.id} className="article-card card shadow bg-light" >

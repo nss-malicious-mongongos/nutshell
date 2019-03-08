@@ -1,16 +1,13 @@
 import React, { Component } from "react"
 import { Route } from "react-router-dom"
 import Dashboard from "./Dashboard";
-
 import ArticleManager from "../modules/ArticleManager";
-import NewArticleForm from "./news/NewArticleForm";
-import EditArticleForm from "./news/EditArticleForm";
-
 import MovieManager from "../modules/MovieManager"
 import MovieForm from "./Movies/MovieForm"
 import MovieFullList from "./Movies/MovieFullList"
 import MovieEditForm from "./Movies/MovieEditForm";
-
+import NewArticleForm from "./news/NewArticleForm";
+import EditArticleForm from "./news/EditArticleForm";
 import TaskManager from "../modules/TaskManager";
 import TaskForm from "./task/TaskForm";
 import TaskEditForm from "./task/TaskEditForm";
@@ -19,7 +16,6 @@ import UserManager from "../modules/UserManager";
 
 import FriendManager from "../modules/FriendManager";
 import NewFriend from "./friends/NewFriend";
-
 
 class ApplicationViews extends Component {
 	state = {
@@ -55,6 +51,52 @@ class ApplicationViews extends Component {
 
 	}
 
+	updateMovie = editedMovie => {
+		return MovieManager.updateMovie(editedMovie)
+			.then(() => MovieManager.getAll())
+			.then(movies => this.setState({ movies: movies }))
+	}
+
+	deleteMovie = id => {
+		return MovieManager.deleteMovie(id)
+			.then(() => MovieManager.getAll())
+			.then(movies => this.setState({ movies: movies }))
+	}
+
+	addMovie = movie => {
+		return MovieManager.addMovie(movie)
+			.then(() => MovieManager.getAll())
+			.then(movies => this.setState({ movies: movies }))
+	}
+
+	addTask = task => {
+		return TaskManager.addTask(task)
+			.then(() => TaskManager.getUserQuery())
+			.then(tasks =>
+				this.setState({
+					tasks: tasks
+				})
+			)
+	}
+	updateTask = editedTask => {
+		return TaskManager.edit(editedTask)
+			.then(() => TaskManager.getUserQuery())
+			.then(tasks =>
+				this.setState({
+					tasks: tasks
+				})
+			)
+	}
+	deleteTask = id => {
+		TaskManager.delete(id)
+			.then(() => TaskManager.getUserQuery())
+			.then(tasks =>
+				this.setState({
+					tasks: tasks
+				})
+			)
+	}
+
 	addFriend = friend => {
     	return FriendManager.addFriend(friend)
 			.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
@@ -75,52 +117,6 @@ class ApplicationViews extends Component {
 			)
 	}
 	
-	addMovie = movie => {
-		return MovieManager.addMovie(movie)
-			.then(() => MovieManager.getAll())
-			.then(movies => this.setState({ movies: movies }))
-	}
-	
-	deleteMovie = id => {
-		return MovieManager.deleteMovie(id)
-		.then(() => MovieManager.getAll())
-		.then(movies => this.setState({ movies: movies }))
-	}
-	
-	updateMovie = editedMovie => {
-		return MovieManager.updateMovie(editedMovie)
-			.then(() => MovieManager.getAll())
-			.then(movies => this.setState({ movies: movies }))
-	}
-
-	addTask = task => {
-		return TaskManager.addTask(task)
-			.then(() => TaskManager.getUserQuery())
-			.then(tasks =>
-				this.setState({
-					tasks: tasks
-				})
-			)
-	}
-	deleteTask = id => {
-		TaskManager.delete(id)
-			.then(() => TaskManager.getUserQuery())
-			.then(tasks =>
-				this.setState({
-					tasks: tasks
-				})
-			)
-	}
-	updateTask = editedTask => {
-		return TaskManager.edit(editedTask)
-		.then(() => TaskManager.getUserQuery())
-		.then(tasks =>
-			this.setState({
-				tasks: tasks
-			})
-			)
-	}
-
 	componentDidMount() {
 		const newState = {};
 		
@@ -144,8 +140,6 @@ class ApplicationViews extends Component {
 	}
 
 	render() {
-
-		console.log(this.state)
 		return <React.Fragment>
 
 	<Route exact path="/" render={props => {
@@ -167,7 +161,7 @@ class ApplicationViews extends Component {
 		}}
 		/>
 
-			<Route exact path="/Movies" render={props => {
+<Route exact path="/Movies" render={props => {
 				return <MovieFullList {...props}
 					movies={this.state.movies}
 					deleteMovie={this.deleteMovie}
@@ -214,6 +208,10 @@ class ApplicationViews extends Component {
 			<Route exact path="/tasks/:taskId(\d+)/edit" render={(props) => {
 				return <TaskEditForm {...props}
 					updateTask={this.updateTask} />
+			}} />
+
+			<Route exact path="/friends/new" render={(props) => {
+				return <NewFriend {...props} addFriend={this.addFriend} users={this.state.users} />
 			}} />
 
 		</React.Fragment>
