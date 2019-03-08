@@ -1,7 +1,8 @@
-import ArticleList from "./news/NewsList";
+import React, {Component} from "react"
+import FriendList from "./friends/FriendList";
+import ArticleList from "./news/NewsList"
 import EventList from "./event/EventList"
 import MovieList from "./Movies/MovieList"
-import React, { Component } from "react"
 import TaskList from "./task/TaskList";
 
 export default class Dashboard extends Component {
@@ -9,6 +10,7 @@ export default class Dashboard extends Component {
         const history = this.props.history;
         return (
             <React.Fragment>
+                <FriendList friends={this.props.friends} users={this.props.users} history={history} deleteFriend={this.props.deleteFriend} />
                 <ArticleList {...this.props} />
                 <EventList history={this.props.history}
                     events={this.props.events}

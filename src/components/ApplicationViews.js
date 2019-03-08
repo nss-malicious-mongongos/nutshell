@@ -1,30 +1,32 @@
-import ArticleManager from "../modules/ArticleManager";
+import React, { Component } from "react"
+import { Route } from "react-router-dom"
 import Dashboard from "./Dashboard"
+import ArticleManager from "../modules/ArticleManager";
+import NewArticleForm from "./news/NewArticleForm";
 import EditArticleForm from "./news/EditArticleForm";
 import EventEditForm from "./event/EventEditForm";
 import EventForm from "./event/EventForm";
 import EventManager from "../modules/EventManager";
-import FriendManager from "../modules/FriendManager";
 import MovieEditForm from "./Movies/MovieEditForm";
 import MovieForm from "./Movies/MovieForm"
 import MovieFullList from "./Movies/MovieFullList"
 import MovieManager from "../modules/MovieManager"
-import NewArticleForm from "./news/NewArticleForm";
-import React, { Component } from "react"
-import { Route } from "react-router-dom"
 import TaskEditForm from "./task/TaskEditForm"
 import TaskForm from "./task/TaskForm"
 import TaskManager from "../modules/TaskManager";
 import UserManager from "../modules/UserManager";
 
+import FriendManager from "../modules/FriendManager";
+import NewFriend from "./friends/NewFriend";
+
 export default class ApplicationViews extends Component {
   state = {
-    articles: [],
-    events: [],
-    friends: [],
-    movies: [],
-    tasks: [],
-    users: []
+	articles: [],
+	events: [],
+	friends: [],
+	movies: [],
+	tasks: [],
+	users: []
   }
 
   addEvent = (event) => {
@@ -49,28 +51,49 @@ export default class ApplicationViews extends Component {
       )
   }
 
-  addTask = task => {
-    return TaskManager.addTask(task)
-      .then(() => TaskManager.getUserQuery())
-      .then(tasks =>
+  addFriend = friend => {
+	return FriendManager.addFriend(friend)
+		.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+		  .then(friends =>
+			this.setState({
+				friends: friends
+			})
+		)
+}
+
+addTask = task => {
+	return TaskManager.addTask(task)
+	.then(() => TaskManager.getUserQuery())
+	.then(tasks =>
         this.setState({
-          tasks: tasks
+			tasks: tasks
         })
-      )
-  }
-
-  deleteArticle = id => {
-    return ArticleManager.deleteArticle(id)
-      .then(() => ArticleManager.getAll())
-      .then(articles => this.setState({ articles: articles })
-      )
-  }
-
-  deleteEvent = (id) => {
-    EventManager.delete(id)
-      .then(() => EventManager.getAll())
-      .then(() => this.refreshEvents())
-  }
+		)
+	}
+	
+	deleteArticle = id => {
+		return ArticleManager.deleteArticle(id)
+		.then(() => ArticleManager.getAll())
+		.then(articles => this.setState({ articles: articles })
+		)
+	}
+	
+	deleteEvent = (id) => {
+		EventManager.delete(id)
+		.then(() => EventManager.getAll())
+		.then(() => this.refreshEvents())
+	}
+	
+	deleteFriend = id => {
+		console.log(id)
+		return FriendManager.delete(id)
+			.then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+			.then(friends =>
+				this.setState({
+					friends: friends
+				})
+			)
+	}
 
   deleteMovie = id => {
     return MovieManager.deleteMovie(id)
@@ -125,32 +148,30 @@ export default class ApplicationViews extends Component {
       )
   }
 
-
   componentDidMount() {
     const newState = {};
     this.refreshEvents()
 
-    ArticleManager.getAll()
-      .then(articles => newState.articles = articles)
-      .then(() => this.setState(newState))
-    MovieManager.getAll()
-      .then(movies => newState.movies = movies)
-    TaskManager.getUserQuery()
-      .then(tasks => newState.tasks = tasks)
-      .then(() => this.setState(newState))
-    UserManager.getAll()
-      .then(users => newState.users = users)
+	UserManager.getAll()
+		.then(users => newState.users = users)
+		
+		.then(() => MovieManager.getAll())
+		.then(movies => newState.movies = movies)
+		  
+		.then(() => EventManager.getAll())
+		.then(events => newState.events = events)
 
-      .then(() => ArticleManager.getAll())
-      .then(articles => newState.articles = articles)
+      	.then(() => ArticleManager.getAll())
+      	.then(articles => newState.articles = articles)
 
       .then(() => TaskManager.getUserQuery())
       .then(tasks => newState.tasks = tasks)
 
-      .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
-      .then(friends => newState.friends = friends)
+	  .then(() => FriendManager.getQuery(`?userId=${parseInt(sessionStorage.getItem("credentials"))}&_expand=user`))
+	  .then(friends => newState.friends = friends)
 
-      .then(() => this.setState(newState))
+	  .then(() => this.setState(newState))
+	  .then(() => console.log("state is:", this.state))
   }
 
   render() {
@@ -160,12 +181,13 @@ export default class ApplicationViews extends Component {
           addNewArticle={this.addNewArticle}
           articles={this.state.articles}
           deleteArticle={this.deleteArticle}
-          deleteEvent={this.deleteEvent}
+		  deleteEvent={this.deleteEvent}
+		  deleteFriend={this.deleteFriend}
           deleteMovie={this.deleteMovie}
           deleteTask={this.deleteTask}
           editArticle={this.EditArticle}
           events={this.state.events}
-          friends={this.state.friends}
+		  friends={this.state.friends}
           movies={this.state.movies}
           tasks={this.state.tasks}
           updateTask={this.updateTask}
@@ -223,6 +245,9 @@ export default class ApplicationViews extends Component {
         />
       }}
       />
+<Route exact path="/friends/new" render={(props) => {
+	return <NewFriend {...props} addFriend={this.addFriend} users={this.state.users} />
+}} />
     </React.Fragment>
   }
 }
