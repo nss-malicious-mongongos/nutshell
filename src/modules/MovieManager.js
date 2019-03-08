@@ -10,7 +10,8 @@ export default {
         }).then(e => e.json());
     },
     getAll() {
-        return fetch(`${Settings.remoteURL}/movies`).then(e => e.json());
+      const activeUser = parseInt(sessionStorage.getItem("credentials"))
+        return fetch(`${Settings.remoteURL}/movies?userId=${activeUser}&_sort=date&_order=asc`).then(e => e.json());
     },
     addMovie(newMovie) {
         return fetch(`${Settings.remoteURL}/movies`, {

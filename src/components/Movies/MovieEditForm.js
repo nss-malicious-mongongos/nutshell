@@ -29,7 +29,6 @@ export default class EditMovieForm extends Component {
           title: this.state.title,
           lead:this.state.lead,
           year: this.state.year,
-          
           userId: parseInt(sessionStorage.getItem("credentials")),
 
 
