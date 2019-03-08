@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./movie.css";
+import moment from 'moment'
 
 export default class MovieForm extends Component {
   // Set initial state
@@ -7,7 +8,8 @@ export default class MovieForm extends Component {
     title: "",
     lead: "",
     year: "",
-    userId: ""
+    userId: "",
+    timestamp: ""
   };
 
   // Update state whenever an input field is edited
@@ -27,7 +29,8 @@ export default class MovieForm extends Component {
         title: this.state.title,
         lead: this.state.lead,
         year: this.state.year,
-        userId: parseInt(sessionStorage.getItem("credentials"))
+        userId: parseInt(sessionStorage.getItem("credentials")),
+        timestamp: moment().format('LLL')
       }
 
       // Create the Movie and redirect user to Movie list
